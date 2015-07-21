@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block post_head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/tutorials.css') }}"
+{% endblock %}
+
+{% block content %}
+	<div class="jumbo">
+		<h2>Tutorials</h2>
+		<div class="languages">
+			<h3>Programming languages</h3>
+			<center><hr></center>
+			<li><img src="/static/img/python.png"></li>
+			<li><img src="/static/img/java.png"></li>
+			<li><img src="/static/img/c.png"></li>
+		</div>
+	</div>
+{% endblock %}
