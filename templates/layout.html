@@ -5,12 +5,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}"> 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui-1.11.4.css') }}"> 
     
-    <script src="{{ url_for('static', filename='js/jquery1.11.3.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    
+    
     
     {% block post_head %}
-    {% endblock %}  
+    {% endblock %} 
+    
+    <!--<script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-ui-1.11.4.js') }}"></script>-->
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script> 
   </head>
   <body>
    

@@ -4,18 +4,29 @@ $(document).ready(function(){
 });
 
 function initialize(){
-	$("#loginForm").hide();
-	$("#registerForm").hide();
+	dialog = $("#login_dialog").dialog({
+		autoOpen:false,
+		height: 300,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Cancel": cancel,
+			Cancel: function(){
+				dialog.dialog("close");
+			}
+		},
+		close: function(){
+			form[0].reset();
+		}
+	});
 }
 
 function buttonClicks(){
 	$("#loginBtn").click(function(){
-		$("#loginForm").slideDown();
-		$("#registerForm").slideUp();
+		dialog.dialog("open");
 	});
 	
 	$("#registerBtn").click(function(){
-		$("#registerForm").slideDown();
-		//$("#loginForm").slideUp();
+		
 	});
 }
