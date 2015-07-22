@@ -1,15 +1,17 @@
 {% extends "layout.html" %}
 
 {% block post_head %}
-	  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	  <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	  <link rel="stylesheet" href="/resources/demos/style.css">
-	  <script>
-	  $(function() {
-	    $( "#login_dialog" ).dialog();
-	  });
-	  </script>
+	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
+	  
+	  <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="jqwidgets/styles/jqx.shinyblack.css" type="text/css" />
+    <script type="text/javascript" src="scripts/jquery-1.6.2.min.js"></script>
+    
+    <script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqxbuttons.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -17,45 +19,59 @@
     <h2>Welcome to ProCode<h2>
     <h3>To add articles or tutorials, please</h3>
     
-    {% if not session.logged_in %}
-	    <!--<div class="centre" style="width: 464px;">
-	    	<div id="loginForm">
-		    	<form action="{{ url_for('login') }}" method="POST">
-		    		<dl>
-		    			<dd>Username:
-		    			<dd><input type=text name=username>
-		    			<dd>Password:
-		    			<dd><input type=password name=password>
-		    			
-		    		</dl>
-		    		<dl id="registerForm">
-		    			<dd>Repeat Password
-	    				<dd><input type=password name=r_password>
-		    		</dl>
-		    	</form>
-		    </div>-->
-		    
-		    		    
-		    <center>
-		    <button id="loginBtn" class="greenBtn bigBtn">Log in</button>
-		    or
-		    <button id="registerBtn" class="blueBtn bigBtn">Register</button>
-	    	</center>
-	    	
-	    	
-			<div id="login_dialog" class="dialog">
-				<form>
-					<dl>
-						<dd>Username:
-					  	<dd><input type=text name=username>
-					  	<dd>Password:
-					  	<dd><input type=password name=password>
-					</dl>
-					<p id="error"></p>
-					<button class="redBtn">Cancel</button>
-			  		<button class="greenBtn">Log in</button>
-				</form>
-			</div>
+    {% if not session.logged_in %}	    
+	    <center>
+	    <button id="loginBtn" class="greenBtn bigBtn">Log in</button>
+	    or
+	    <button id="registerBtn" class="blueBtn bigBtn">Register</button>
+    	</center>
+    	
+    	
+		<div id="login_dialog" class="dialog" title="Log in">
+			<form action="{{ url_for('login') }}" method="POST">
+				<table>
+					<tr>
+						<td>Username:</td>
+						<td><input type=text name=username></td>
+					</tr>
+					<tr>
+					  	<td>Password:</td>
+					  	<td><input type=password name=password></td>
+					</tr>
+					<tr>
+						<td><label id="error"></label></td>
+			  			<td align="right" valign="bottom">
+			  				<input type=submit id="submit" class="greenBtn" value="Log in">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<div id="register_dialog" class="dialog" title="Register">
+			<form action="{{ url_for('register') }}" method="POST">
+				<table>
+					<tr>
+						<td>Username:</td>
+						<td><input type=text name=username></td>
+					</tr>
+					<tr>
+					  	<td>Password:</td>
+					  	<td><input type=password name=password></td>
+					</tr>
+					<tr>
+					  	<td>Repeat password:</td>
+					  	<td><input type=password name=r_password></td>
+					</tr>
+					<tr>
+						<td><label id="error"></label></td>
+			  			<td align="right" valign="bottom">
+			  				<input type=submit id="submit" class="greenBtn" value=Register">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	    	
     {% else %}
     

@@ -8,9 +8,6 @@ def make_session_permanent():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1) 
 
-@app.before_request
-def loginCount():
-    session['login_press_count'] = 0
 
 """
     Routes for main menu
@@ -29,12 +26,8 @@ def about():
   
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    session['login_press_count'] += 1
-    if session['login_press_count'] == 1:
-        return
-    if session['login_press_count'] == 2 and request.method == 'POST':
+    if request.method == 'POST':
         session['username'] = request.form['username']
-        session['login_press_count'] = 0
         return redirect(url_for('home'))
     return 
 
