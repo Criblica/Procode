@@ -28,5 +28,13 @@ def about():
 def python():
     return render_template('tutorials/python.html')
 
+@app.route('/tutorials/java')
+def java():
+    return render_template('/tutorials/java.html')
+
+@app.route('/tutorials/c')
+def c():
+    return render_template('/tutorials/c.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
