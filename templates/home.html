@@ -2,6 +2,45 @@
 {% block content %}
   <div class="jumbo">
     <h2>Welcome to ProCode<h2>
-    <h3>This is the home page for the Flask app<h3>
+    <h3>To add articles or tutorials, please</h3>
+    
+    {% if not session.logged_in %}
+	    <div class="centre" style="width: 464px;">
+	    	<div id="loginForm">
+		    	<form action="{{ url_for('login') }}" method="POST">
+		    		<dl>
+		    			<dd>Username:
+		    			<dd><input type=text name=username>
+		    			<dd>Password:
+		    			<dd><input type=password name=password>
+		    			
+		    		</dl>
+		    		<dl id="registerForm">
+		    			<dd>Repeat Password
+	    				<dd><input type=password name=r_password>
+		    		</dl>
+		    	</form>
+		    </div>
+		    <!--
+	    	<div id="registerForm">
+		    	<form action="{{ url_for('register') }}" method="POST">
+		    		<dl>
+		    			<dd>Username:
+		    			<dd><input type=text name=username>
+		    			<dd>Password:
+		    			<dd><input type=password name=password>
+		    			<dd>Repeat password:
+		    			<dd><input type=password name=password>
+		    		</dl>
+		    	</form>
+		    </div>-->
+		    
+		    <button id="loginBtn" class="greenBtn bigBtn">Log in</button>
+		    or
+		    <button id="registerBtn" class="blueBtn bigBtn">Register</button>
+	    </div>
+    {% else %}
+    
+    {% endif %}
   </div>
 {% endblock %}

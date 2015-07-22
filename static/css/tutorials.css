@@ -12,6 +12,11 @@
 	border: 5px solid #5cbf2a;
 }
 
+.languages li:active {
+	position:relative;
+	top:1px;
+}
+
 hr{
 	width: 60%;
 	color: #999;

@@ -1,7 +1,16 @@
-from flask import Flask, render_template
-  
+from flask import Flask, render_template, session, request, redirect, url_for
+from datetime import timedelta
+   
 app = Flask(__name__)
-  
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1) 
+
+@app.before_request
+def loginCount():
+    session['login_press_count'] = 0
 
 """
     Routes for main menu
@@ -18,7 +27,25 @@ def tutorials():
 def about():
     return render_template('about.html')
   
-  
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    session['login_press_count'] += 1
+    if session['login_press_count'] == 1:
+        return
+    if session['login_press_count'] == 2 and request.method == 'POST':
+        session['username'] = request.form['username']
+        session['login_press_count'] = 0
+        return redirect(url_for('home'))
+    return 
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
   
 """
     Routes for tutorials
@@ -37,4 +64,5 @@ def c():
     return render_template('/tutorials/c.html')
 
 if __name__ == '__main__':
+    app.secret_key = 'This is my supersecret key that nobody knows about, except my butcher!!!'
     app.run(debug=True)
