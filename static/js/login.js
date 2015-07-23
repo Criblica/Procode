@@ -72,15 +72,17 @@ function validate_registration(){
 	var invalid_password_msg = "Password may consist of a-z, A-Z and 0-9";
 	var non_equal_passwords_msg = "Passwords must be the same";
 	
+	
+	
 	valid = valid && checkLength(uname_obj, "username", 3, 16, error_field);
 	valid = valid && checkLength(passwd_obj, "password", 6, 30, error_field);
 	valid = valid && checkRegexp(uname_obj, /^([0-9a-zA-Z_])+$/i, error_field, invalid_username_msg);
-	valid = valid && checkRegexp(passwd_obj,  /^([0-9a-zA-Z])+$/, error_field, invalid_passwd_msg);
+	valid = valid && checkRegexp(passwd_obj,  /^([0-9a-zA-Z])+$/, error_field, invalid_password_msg);
 	valid = valid && comparePasswords(passwd_obj.val(), r_passwd_obj.val(), error_field, non_equal_passwords_msg);
 	
 	//send  validation request to server
 	
-	return false;
+	return valid;
 }
 
 
@@ -102,8 +104,6 @@ function checkRegexp(obj, regexp, error_field, error_msg){
 }
 
 function comparePasswords(passwd, r_passwd, error_field, error_msg){
-	console.log(passwd);
-	console.log(r_passwd);
 	if (passwd == r_passwd){
 		return true;
 	}	
