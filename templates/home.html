@@ -1,16 +1,6 @@
 {% extends "layout.html" %}
 
 {% block post_head %}
-	  <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
-	  
-	  
-	  
-	
-    <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.6.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.10.2.js">-->
-    
     <script type="text/javascript" src="static/js/jqxwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="static/js/jqxwidgets/jqxwindow.js"></script>
     <script type="text/javascript" src="static/js/jqxwidgets/jqxbuttons.js"></script>
@@ -67,7 +57,7 @@
 					<table>
 						<tr>
 							<td>Username:</td>
-							<td><input id="register_username" type=text name=username></td>
+							<td><input id="register_username" type=text name=username autofocus></td>
 						</tr>
 						<tr>
 						  	<td>Password:</td>
@@ -86,7 +76,6 @@
 				</form>
 			</div>
 		</div>
-	    	
     {% else %}
     
     {% endif %}
