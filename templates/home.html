@@ -5,13 +5,23 @@
 	  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
 	  
-	  <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
-    <link rel="stylesheet" href="jqwidgets/styles/jqx.shinyblack.css" type="text/css" />
-    <script type="text/javascript" src="scripts/jquery-1.6.2.min.js"></script>
+	  
+	  
+	
+    <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js">-->
     
-    <script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxwindow.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="static/js/jqxwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="static/js/jqxwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="static/js/jqxwidgets/jqxbuttons.js"></script>
+	
+	<link rel="stylesheet" href="static/css/jqxwidgets/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.shinyblack.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.black.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-darkness.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-le-frog.css" type="text/css" />
+    
+
 {% endblock %}
 
 {% block content %}
@@ -27,50 +37,54 @@
     	</center>
     	
     	
-		<div id="login_dialog" class="dialog" title="Log in">
-			<form action="{{ url_for('login') }}" method="POST">
-				<table>
-					<tr>
-						<td>Username:</td>
-						<td><input type=text name=username></td>
-					</tr>
-					<tr>
-					  	<td>Password:</td>
-					  	<td><input type=password name=password></td>
-					</tr>
-					<tr>
-						<td><label id="error"></label></td>
-			  			<td align="right" valign="bottom">
-			  				<input type=submit id="submit" class="greenBtn" value="Log in">
-						</td>
-					</tr>
-				</table>
-			</form>
+		<div id="login_window" caption="Log in">
+			<div>
+				<form action="{{ url_for('login') }}" method="POST">
+						<label id="login_error" class="error"></label>
+						<table>
+						<tr>
+							<td>Username:</td>
+							<td><input type=text id="login_username" name=username></td>
+						</tr>
+						<tr>
+						  	<td>Password:</td>
+						  	<td><input type=password id="login_password" name=password></td>
+						</tr>
+						<tr>
+				  			<td align="right" valign="bottom" colspan="2">
+				  				<input type=submit id="login" class="greenBtn" value="Log in">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>
 		
-		<div id="register_dialog" class="dialog" title="Register">
-			<form action="{{ url_for('register') }}" method="POST">
-				<table>
-					<tr>
-						<td>Username:</td>
-						<td><input type=text name=username></td>
-					</tr>
-					<tr>
-					  	<td>Password:</td>
-					  	<td><input type=password name=password></td>
-					</tr>
-					<tr>
-					  	<td>Repeat password:</td>
-					  	<td><input type=password name=r_password></td>
-					</tr>
-					<tr>
-						<td><label id="error"></label></td>
-			  			<td align="right" valign="bottom">
-			  				<input type=submit id="submit" class="greenBtn" value=Register">
-						</td>
-					</tr>
-				</table>
-			</form>
+		<div id="register_window" caption="Register">
+			<div>
+				<form action="{{ url_for('register') }}" method="POST">
+					<label id="register_error" class="error"></label>
+					<table>
+						<tr>
+							<td>Username:</td>
+							<td><input id="register_username" type=text name=username></td>
+						</tr>
+						<tr>
+						  	<td>Password:</td>
+						  	<td><input id="register_password" type=password name=password></td>
+						</tr>
+						<tr>
+						  	<td>Repeat password:</td>
+						  	<td><input id="register_r_password" type=password name=r_password></td>
+						</tr>
+						<tr>
+				  			<td align="right" valign="bottom" colspan="2">
+				  				<input type=submit id="register" class="blueBtn" value="Register">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>
 	    	
     {% else %}

@@ -24,21 +24,20 @@ def tutorials():
 def about():
     return render_template('about.html')
   
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('home'))
-    return 
+    session['username'] = request.form['username']
+    return redirect(url_for('home'))
+
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
-    return render_template('register.html')
+    return redirect(url_for('home'))
   
 """
     Routes for tutorials
