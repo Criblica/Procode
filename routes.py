@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for
 from datetime import timedelta
+import json
    
 app = Flask(__name__)
 
@@ -24,20 +25,34 @@ def tutorials():
 def about():
     return render_template('about.html')
   
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    session['username'] = request.form['username']
-    return redirect(url_for('home'))
+    return render_template('login.html')
 
+@app.route('/validate_login', methods=['GET', 'POST'])
+def validate_login():
+    session['username'] = request.form['username']
+    print session['username']
+    
+    session['logged_in'] = True
+    
+    errorDict = {'message':"OK", 'iserror': False}
+    return json.dumps(errorDict)
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session['logged_in'] = False
     return redirect(url_for('home'))
 
-@app.route('/register', methods=['POST'])
-def register():
-    return redirect(url_for('home'))
+@app.route('/register', methods=['GET', 'POST'])
+def registration():
+    return render_template('registration.html')
+
+@app.route('/validate_registration', methods=['GET', 'POST'])
+def validate_registration():
+    response = {'message': "OK", 'iserror': False}
+    return json.dumps(response)
   
 """
     Routes for tutorials

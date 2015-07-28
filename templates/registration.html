@@ -1,0 +1,34 @@
+{% extends "home.html" %}
+
+{% block sub_post_head %}
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script> 
+{% endblock %}
+
+{% block registration_window %}
+	<div id="register_window" caption="Register">
+		<div>
+			<form id="registration_form" action="" method="POST">
+				<label id="register_error" class="error"></label>
+				<table>
+					<tr>
+						<td>Username:</td>
+						<td><input id="register_username" type=text name=username autofocus></td>
+					</tr>
+					<tr>
+					  	<td>Password:</td>
+					  	<td><input id="register_password" type=password name=password></td>
+					</tr>
+					<tr>
+					  	<td>Repeat password:</td>
+					  	<td><input id="register_r_password" type=password name=r_password></td>
+					</tr>
+					<tr>
+			  			<td align="right" valign="bottom" colspan="2">
+			  				<input type=button id="register" class="blueBtn" value="Register" onclick="validate_registration();">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}

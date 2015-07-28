@@ -26,6 +26,13 @@
 	top:1px;
 }
 
+.identifier{
+	margin-top: 12px;
+	margin-right: 20px;
+	float: right;
+	color: grey;
+}
+
 .login{
 	margin-top: 5px;
 	float: right;

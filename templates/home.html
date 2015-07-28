@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 
+
 {% block post_head %}
     <script type="text/javascript" src="static/js/jqxwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="static/js/jqxwidgets/jqxwindow.js"></script>
@@ -11,6 +12,10 @@
     <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-darkness.css" type="text/css" />
     <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-le-frog.css" type="text/css" />
     
+    <script type="text/javascript" src="static/js/validation.js"></script>
+    
+    {% block sub_post_head %}
+    {% endblock %}
 
 {% endblock %}
 
@@ -21,61 +26,19 @@
     
     {% if not session.logged_in %}	    
 	    <center>
-	    <button id="loginBtn" class="greenBtn bigBtn">Log in</button>
+	    <a href="{{ url_for('login') }}"> <button id="loginBtn" class="greenBtn bigBtn">Log in</button></a>
 	    or
-	    <button id="registerBtn" class="blueBtn bigBtn">Register</button>
+	    <a href="{{ url_for('registration') }}"> <button id="registerBtn" class="blueBtn bigBtn">Register</button></a>
     	</center>
     	
     	
-		<div id="login_window" caption="Log in">
-			<div>
-				<form action="{{ url_for('login') }}" method="POST">
-						<label id="login_error" class="error"></label>
-						<table>
-						<tr>
-							<td>Username:</td>
-							<td><input type=text id="login_username" name=username></td>
-						</tr>
-						<tr>
-						  	<td>Password:</td>
-						  	<td><input type=password id="login_password" name=password></td>
-						</tr>
-						<tr>
-				  			<td align="right" valign="bottom" colspan="2">
-				  				<input type=submit id="login" class="greenBtn" value="Log in">
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
+		{% block login_window %}
+		{% endblock %}
 		
-		<div id="register_window" caption="Register">
-			<div>
-				<form action="{{ url_for('register') }}" method="POST">
-					<label id="register_error" class="error"></label>
-					<table>
-						<tr>
-							<td>Username:</td>
-							<td><input id="register_username" type=text name=username autofocus></td>
-						</tr>
-						<tr>
-						  	<td>Password:</td>
-						  	<td><input id="register_password" type=password name=password></td>
-						</tr>
-						<tr>
-						  	<td>Repeat password:</td>
-						  	<td><input id="register_r_password" type=password name=r_password></td>
-						</tr>
-						<tr>
-				  			<td align="right" valign="bottom" colspan="2">
-				  				<input type=submit id="register" class="blueBtn" value="Register">
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
+		{% block registration_window %}
+		{% endblock %}
+		
+		
     {% else %}
     
     {% endif %}

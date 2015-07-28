@@ -1,0 +1,30 @@
+{% extends "home.html" %}
+
+{% block sub_post_head %}
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script> 
+{% endblock %}
+
+{% block login_window %}
+	<div id="login_window" caption="Log in">
+		<div>
+			<form id="login_form" action="">
+					<label id="login_error" class="error"></label>
+					<table>
+					<tr>
+						<td>Username:</td>
+						<td><input type=text id="login_username" name=username></td>
+					</tr>
+					<tr>
+					  	<td>Password:</td>
+					  	<td><input type=password id="login_password" name=password></td>
+					</tr>
+					<tr>
+			  			<td align="right" valign="bottom" colspan="2">
+			  				<input type=button id="login" class="greenBtn" value="Log in" onclick="validate_login();">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}
