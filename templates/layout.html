@@ -18,7 +18,7 @@
     {% block post_head %}
     {% endblock %} 
     
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script> 
+    
   </head>
   <body>
    
@@ -32,7 +32,8 @@
             <li><a href="{{ url_for('about') }}">About</a></li>
           </ul>
           {% if session.logged_in %}
-          	Logged in as: {{ session['username'] }} <button class="blueBtn login">Log out</button>
+          	<button class="blueBtn login" onclick="{{ url_for('logout') }}">Log out</button>
+          	<label class="identifier">Logged in as: {{ session['username'] }}</label>
           {% endif %}
         </nav></strong>
       </div>
