@@ -26,20 +26,22 @@ class User(db.Model):
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     language = db.Column(db.String(255), nullable=False, unique=False)
+    title = db.Column(db.String(255), nullable=False, unique=False)
     code = db.Column(db.Text, nullable=False, unique=False)
     explanation = db.Column(db.Text, nullable=False, unique=False)
     author =  db.Column(db.String(16), nullable=False, unique=False)
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
     
-    def __init__(self, language, code, explanation, author, date):
+    def __init__(self, language, title, code, explanation, author, date):
         self.language = language
+        self.title = title
         self.code = code
         self.explanation = explanation
         self.author = author
         self.date = date
     
     def to_json(self):
-        return dict(language=self.language, code=self.code, explanation=self.explanation, author=self.author, date=self.date)
+        return dict(language=self.language, title=self.title, code=self.code, explanation=self.explanation, author=self.author, date=self.date)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
