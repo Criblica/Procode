@@ -21,10 +21,9 @@
 
 {% block content %}
   <div class="jumbo">
-    <h2>Welcome to ProCode<h2>
-    <h3>To add articles or tutorials, please</h3>
-    
-    {% if not session.logged_in %}	    
+    {% if not session.logged_in %}	
+    	<h2>Welcome to ProCode<h2>
+    	<h3>To add articles or tutorials, please</h3>    
 	    <center>
 	    <a href="{{ url_for('login') }}"> <button id="loginBtn" class="greenBtn bigBtn">Log in</button></a>
 	    or
@@ -40,7 +39,7 @@
 		
 		
     {% else %}
-    
+    	<h2>News<h2>
     {% endif %}
   </div>
 {% endblock %}

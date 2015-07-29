@@ -23,21 +23,24 @@
   <body>
    
     <header>
-      <div class="container">
-        <h1 class="logo">ProCode</h1>
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('tutorials') }}">Tutorials</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-          </ul>
-          {% if session.logged_in %}
-          	<button class="blueBtn login" onclick="{{ url_for('logout') }}">Log out</button>
-          	<label class="identifier">Logged in as: {{ session['username'] }}</label>
-          {% endif %}
-        </nav></strong>
-      </div>
-    </header> 
+   		{% if session.logged_in %}
+    		<a href="{{ url_for('add_tutorial') }}"><button class="greenBtn add_btn">Add</button></a>
+		{% endif %}
+		<div class="container">
+		    <h1 class="logo">ProCode</h1>
+		    <strong><nav>
+		      <ul class="menu">
+		        <li><a href="{{ url_for('home') }}">Home</a></li>
+		        <li><a href="{{ url_for('tutorials') }}">Tutorials</a></li>
+		        <li><a href="{{ url_for('about') }}">About</a></li>
+		      </ul>
+		      {% if session.logged_in %}
+		      	<a href="{{ url_for('logout') }}"><button class="blueBtn login">Log out</button></a>
+		      	<label class="identifier">Logged in as: {{ session['username'] }}</label>
+		      {% endif %}
+		    </nav></strong>
+	  </div>
+	</header> 
      
     <div class="container">
       {% block content %}
