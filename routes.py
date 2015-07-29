@@ -143,6 +143,10 @@ def validate_registration():
 def add_tutorial():
     return render_template('tutorials/add.html')
 
+@app.route('/tutorials/create', methods=['GET', 'POST'])
+def create_article():
+    return json.dumps(dict(message="OK", iserror=False))
+
 @app.route('/tutorials/python')
 def python():
     return render_template('tutorials/python.html')

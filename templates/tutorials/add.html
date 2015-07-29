@@ -1,10 +1,57 @@
 {% extends "tutorials.html" %}
 
+{% block post_head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/add_article.css') }}"> 
+	<script src="{{ url_for('static', filename='js/add_article.js') }}"></script>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	
+	<script src="{{ url_for('static', filename='codemirror-5.5/lib/codemirror.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='codemirror-5.5/lib/codemirror.css') }}">
+	<script src="{{ url_for('static', filename='codemirror-5.5/mode/python/python.js') }}"></script>
+{% endblock %}
+
 {% block tutorial_content %}
 	<div>
 		<h2>Add Tutorial</h2>
-		<form action="{{ url_for('create_article') }}" method="POST">
-		<input >
-		</form>
+		<div class="add_form">
+			<form action="{{ url_for('create_article') }}" method="POST">
+				<table>
+					<tr>
+						<td>Title:</td>
+						<td><input type=text id="title" name=title autofocus></td>
+						<td>Select type:</td>
+						<td><select id="select_type">
+						  <option value="code" selected="selected">Code</option>
+						  <option value="question">Question</option>
+						  <option value="findout">Findout</option>
+						</select></td>
+					</tr>
+				</table>
+				
+				<table id="code">
+					<tr>
+						<td>
+							<textarea id="editor" class="Codemirror" name=code>print "Hello World"
+							</textarea>
+						</td>
+					</tr>
+				</table>
+				<table id="question">
+					<tr>
+						<td>Question:</td>
+					</tr>
+					<tr>
+						<td><textarea rows="4" cols="100"></textarea></td>
+					</tr>
+				</table>
+				<table id="findout">
+					<tr>
+						<td><textarea rows="4" cols="100"></textarea></td>
+					</tr>
+				</table>
+				<input type="button" class="greenBtn" value="Post">
+				
+			</form>
+		</div>
 	</div>
 {% endblock %}

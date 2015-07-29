@@ -81,6 +81,7 @@ h3 {
 .add_btn{
 	display: inline;
 	float: left;
-	margin-left: 30px;
+	margin-left: 1%;
 	margin-top: 6px;
+	width: 8%;
  }
