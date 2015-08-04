@@ -46,6 +46,7 @@ div.jumbo {
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
+  overflow: hidden;
 }
 
 div.centre
@@ -71,6 +72,16 @@ h3 {
   color: #999;
 }
 
+h4{
+  font-size: 1.2em;
+  font-weight: 100;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-align: left;
+  letter-spacing: -1px;
+  color: #999;
+}
+
 .error{
 	color: red;
 	overflow: visible;
@@ -85,3 +96,12 @@ h3 {
 	margin-top: 6px;
 	width: 8%;
  }
+ 
+ .settings-btn{
+	float: right;
+	margin-top: 6px;
+}
+
+ul{
+	list-style-type: none;
+}

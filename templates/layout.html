@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui-1.11.4.css') }}"> 
     
     
-    
-    
-    
-    
     <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
     
     {% block post_head %}
@@ -23,19 +19,30 @@
    
     <header>
    		{% if session.logged_in %}
-    		<a href="{{ url_for('add_tutorial') }}"><button class="greenBtn add_btn">Add</button></a>
+    		<a href="{{ url_for('add_article') }}"><button class="greenBtn add_btn">Add</button></a>
 		{% endif %}
 		<div class="container">
 		    <h1 class="logo">ProCode</h1>
 		    <strong><nav>
 		      <ul class="menu">
 		        <li><a href="{{ url_for('home') }}">Home</a></li>
-		        <li><a href="{{ url_for('tutorials') }}">Tutorials</a></li>
+		        <li><a href="{{ url_for('articles') }}">Articles</a></li>
 		        <li><a href="{{ url_for('about') }}">About</a></li>
 		      </ul>
 		      {% if session.logged_in %}
+		      	<!--<ul class="menu">
+		      		<li class="settings">
+		      			<a  href="#">Settings</a>
+		      			<ul class="submenu">
+		      				<li><a href="#">Edit profile</a></li>
+		      				<li><a href="#">Log out</a></li>
+		      			</ul>
+		      		</li>
+		      	</ul>-->
+		      	<!--<img class="settings-btn" src="{{ url_for('static', filename='img/settings.png') }}" width="25px" height="25px">-->
 		      	<a href="{{ url_for('logout') }}"><button class="blueBtn login">Log out</button></a>
 		      	<label class="identifier">Logged in as: {{ session['username'] }}</label>
+		      	
 		      {% endif %}
 		    </nav></strong>
 	  </div>

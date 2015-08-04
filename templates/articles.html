@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block post_head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/articles.css') }}"
+	<script src="{{ url_for('static', filename='js/articles.js') }}"></script>
+	
+	<script language="javascript" src="{{ url_for('static', filename='js/scripts/shCore.js') }}"></script>
+	<script language="javascript" src="{{ url_for('static', filename='js/scripts/shBrushPython.js') }}"></script>
+	<script language="javascript" src="{{ url_for('static', filename='js/scripts/shBrushJScript.js') }}"></script>
+	<link href="{{ url_for('static', filename='css/styles/shCore.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ url_for('static', filename='css/styles/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+	<div class="jumbo">
+		{% block tutorial_content %}
+		{% endblock %}
+	</div>
+	
+	<script type="text/javascript">
+	     SyntaxHighlighter.all()
+	</script>
+{% endblock %}

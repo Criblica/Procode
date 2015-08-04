@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-le-frog.css" type="text/css" />
     
     <script type="text/javascript" src="static/js/validation.js"></script>
+    <link rel="stylesheet" href="static/css/profile.css" type="text/css" />
     
     {% block sub_post_head %}
     {% endblock %}
@@ -39,7 +40,62 @@
 		
 		
     {% else %}
-    	<h2>News<h2>
+    	<h2>{{ session['username'] }}</h2>
+    	<div>
+    		<div class="profile_image">
+    			{% if not session.has_image %}
+    				<img  src="{{ url_for('static', filename="img/no-profile.gif") }}" width=200 height=200>
+    			{% endif %}
+    			<button class="blueBtn">Edit profile image</button>
+    		</div>
+    		<div class="top-5">
+    			<div class="top-5-content-position">
+	    			<ul class="content-list">
+	    				<h4> 5 latest code snippets:</h4>
+	    				{% if code_snippets.count() == 0 %}
+	    					<li>-No code snippets-</li>
+	    				{% else %}
+		    				{% for code_snippet in code_snippets|sort(attribute='date', reverse=True) %}
+		    					{% if loop.index <= 5 %}
+		    						<li><a href="{{ url_for('view_code_snippet', snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
+		    					{% endif %}
+		    				{% endfor %}
+	    				{% endif %}
+	    			</ul>
+	    		</div>
+	    		<div class="top-5-content-position">
+	    			<ul class="content-list">
+	    				<h4>5 latest questions:</h4>
+	    				{% if questions.count() == 0 %}
+	    					<li>-No questions-</li>
+	    				{% else %}
+		    				{% for question in questions|sort(attribute='date',reverse=True) %}
+		    					{% if loop.index <= 5 %}
+		    						<li><a href="#">{{ question.title }}</a></li>
+		    					{% endif %}
+		    				{% endfor %}
+		    			{% endif %}
+	    			</ul>
+	    		</div>
+	    		<div class="top-5-content-position">
+    				<ul class="content-list">
+    					<h4>5 latest findouts</h4>
+    					{% if findouts.count() == 0 %}
+	    					<li>-No findouts-</li>
+	    				{% else %}
+	    					{% for findout in findouts|sort(attribute='date', reverse=True) %}
+	    						{% if loop.index <= 5 %}
+		    						<li><a href="#">{{ findout.title }}</a></li>
+		    					{% endif %}
+		    				{% endfor %}
+		    			{% endif %}
+    				</ul>
+    			</div>
+    		</div>
+    	</div>
+    	
+    	<!--<p>image, username, change password, add/edit email/show, inbox.., ..news..??
+    	</p>-->
     {% endif %}
   </div>
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends "articles.html" %}
+
+{% block tutorial_content %}
+	<h2>Code snippets</h2>
+	<h3>{{ code_snippet.title }}</h3>
+	<pre class="brush: python">{{ code_snippet.code }}</pre>
+
+
+{% endblock %}
