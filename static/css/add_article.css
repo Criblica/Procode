@@ -1,4 +1,18 @@
+.add_form{
+	margin: 0 auto;
+	width: 75%;
+}
 
-.CodeMirror {
-    height: auto;
+.table{
+	margin: 0 auto;
+	width: 100%;
+}
+
+textarea{
+	width: 100%;
+}
+
+.index-form{
+	margin-bottom: 10px;
+	width: 100%;
 }

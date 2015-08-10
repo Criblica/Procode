@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import time
 #from datetime import timedelta, datetime
 import json
 
@@ -29,80 +30,78 @@ class User(db.Model):
         self.confirmed = confirmed
         self.admin = admin
         
+        
 class CodeSnippet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(20), default="code snippet", nullable=False, unique=False)
+    author =  db.Column(db.String(16), nullable=False, unique=False)
+    date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     language = db.Column(db.String(255), nullable=False, unique=False)
     title = db.Column(db.String(255), nullable=False, unique=False)
     code = db.Column(db.Text, nullable=False, unique=False)
-    author =  db.Column(db.Integer, nullable=False, unique=False)
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
+    prewords = db.Column(db.Text, unique=False)
+    afterwords = db.Column(db.Text, unique=False)
     
-    def __init__(self, language, title, code, author):
+    def __init__(self, author, language, title, code, prewords, afterwords):
+        self.author = author
         self.language = language
         self.title = title
         self.code = code
-        self.author = author
-    
-    def to_json(self):
-        return dict(language=self.language, title=self.title, code=self.code, author=self.author, date=self.date)
+        self.prewords = prewords
+        self.afterwords = afterwords
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False, unique=False)
-    author =  db.Column(db.String(16), nullable=False, unique=False)
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
     question = db.Column(db.Text, nullable=False, unique=False)
+    type = db.Column(db.String(20), default="question", nullable=False, unique=False)
+    author =  db.Column(db.String(16), nullable=False, unique=False)
+    date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
-    def __init__(self, title, question, author):
+    def __init__(self, author, title, question):
+        self.author = author
         self.title = title
         self.question = question
-        self.author = author
-    
-    def to_json(self):
-        return dict(title=self.title,question=self.question, author=self.author)
 
 class Findout(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False, unique=False)
-    author =  db.Column(db.String(16), nullable=False, unique=False)
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
     findout = db.Column(db.Text, nullable=False, unique=False)
+    type = db.Column(db.String(20), default="findout", nullable=False, unique=False)
+    author =  db.Column(db.String(16), nullable=False, unique=False)
+    date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
-    def __init__(self, title, findout, author):
+    def __init__(self, author, title, findout):
+        self.author = author
         self.title = title
         self.findout = findout
-        self.author = author
     
-    def to_json(self):
-        return dict(title=self.title,findout=self.findout, author=self.author)
-
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    article_id = db.Column(db.Integer, nullable=False, unique=False)
+    article_type = db.Column(db.String(20), nullable=False, unique=False)
     message = db.Column(db.Text, nullable=False, unique=False)
-    author =  db.Column(db.String(16), nullable=False, unique=False) #use user id as primary key instead and do a lookup in users to get username
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
+    author =  db.Column(db.String(16), nullable=False, unique=False) 
+    date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
-    def __init__(self, message, author, date):
+    def __init__(self, article_id, article_type, message, author):
+        self.article_id = article_id
+        self.article_type = article_type
         self.message = message
         self.author = author
-        self.date = date
         
-    def to_json(self):
-        return dict(message=self.message, author=self.author, date=self.date)
-
+   
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False, unique=False)
     message = db.Column(db.Text, nullable=False, unique=False)
-    date = db.Column(db.DateTime, default=datetime.datetime.utcnow, unique=False)
+    date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
     def __init__(self, title, message, date):
         self.title = title
         self.message = message
         self.date = date
         
-    def to_json(self):
-        return dict(title=self.title, message=self.message, date=self.date)
 
 db.create_all()
 
@@ -119,16 +118,19 @@ def make_session_permanent():
 @app.route('/')
 def home():
     if 'logged_in' in session:
-        if session['logged_in']:
-            code_snippets = CodeSnippet.query.filter_by(author=session['id'])
-            questions = Question.query.filter_by(author=session['id'])
-            findouts = Findout.query.filter_by(author=session['id'])            
+        if session['logged_in']: 
+            code_snippets = CodeSnippet.query.filter_by(author=session['username'])
+            questions = Question.query.filter_by(author=session['username'])
+            findouts = Findout.query.filter_by(author=session['username'])   
             return render_template('home.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
     return render_template('home.html')
 
 @app.route('/articles')
 def articles():
-    return render_template('articles/index.html')
+    code_snippets = CodeSnippet.query.all()
+    questions = Question.query.all()
+    findouts = Findout.query.all()
+    return render_template('articles/index.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
   
 @app.route('/about')
 def about():
@@ -186,57 +188,77 @@ def validate_registration():
 def add_article():
     return render_template('articles/add.html')
 
+
 @app.route('/articles/create_code_snippet', methods=['GET', 'POST'])
 def create_code_snippet():
     title = request.json['title']
     code = request.json['code']
+    prewords = request.json['prewords']
+    afterwords = request.json['afterwords']
     language = request.json['language']
     
-    code_snippet = CodeSnippet(language, title, code, session['id'])
+    code_snippet = CodeSnippet(session['username'], language, title, code, prewords, afterwords)
     db.session.add(code_snippet)
     db.session.commit()
-    
     return json.dumps(dict(message="OK", iserror=False))
 
-@app.route('/articles/create_question', methods=['GET', 'POST'])
+@app.route('/articles/create_question', methods=['GET', 'POST'])  
 def create_question():
     title = request.json['title']
-    question = request.json['question']
+    question_message = request.json['question']
     
-    question = Question(title, question, session['id'])
+    question = Question(session['username'], title, question_message)
     db.session.add(question)
     db.session.commit()
-    
     return json.dumps(dict(message="OK", iserror=False))
 
 @app.route('/articles/create_findout', methods=['GET', 'POST'])
 def create_findout():
     title = request.json['title']
-    findout = request.json['findout']
+    findout_message = request.json['findout']
     
-    findout = Findout(title, findout, session['id'])
+    findout = Findout(session['username'], title, findout_message)
     db.session.add(findout)
     db.session.commit()
-    
     return json.dumps(dict(message="OK", iserror=False))
 
-@app.route('/articles/python')
-def python():
-    return render_template('articles/python.html')
+@app.route('/articles/code_snippet/<code_snippet_id>')
+def view_code_snippet(code_snippet_id):
+    code_snippet = CodeSnippet.query.filter_by(id=code_snippet_id).first()
+    comments = Comment.query.filter_by(id=code_snippet_id, article_type="code_snippet")
+    return render_template('/articles/article.html', article=code_snippet, comments=comments)
 
-@app.route('/articles/java')
-def java():
-    return render_template('/articles/java.html')
+@app.route('/articles/question/<question_id>')
+def view_question(question_id):
+    question = Question.query.filter_by(id=question_id).first()
+    comments = Comment.query.filter_by(id=question_id, article_type="question")    
+    return render_template('/articles/article.html', article=question, comments=comments)
 
-@app.route('/articles/c')
-def c():
-    return render_template('/articles/c.html')
+@app.route('/articles/code_snippet/<findout_id>')
+def view_findout(findout_id):
+    findout = Findout.query.filter_by(id=findout_id).first()
+    comments = Comment.query.filter_by(id=findout_id, article_type="findout")
+    return render_template('/articles/article.html', article=findout, comments=comments)
 
-@app.route('/articles/code_snippets/<snippet_id>')
-def view_code_snippet(snippet_id):
-    code_snippet = CodeSnippet.query.filter_by(id=snippet_id).first()
-    print code_snippet.language
-    return render_template('/articles/code_snippet.html', code_snippet=code_snippet)
+
+@app.route('/articles/post_comment', methods=['GET', 'POST'])
+def post_comment():
+    message = request.json['message']
+    article_id = request.json['article_id']
+    article_type = request.json['article_type']
+    
+    comment = Comment(article_id, article_type, message, session['username'])
+    
+    print comment.id
+    print comment.message
+    print comment.article_id
+    print comment.article_type
+    print comment.author
+    print comment.date
+    
+    db.session.add(comment)
+    db.session.commit()
+    return json.dumps(dict(message="OK", iserror=False))
 
 if __name__ == '__main__':
     app.secret_key = 'This is my supersecret key that nobody knows about, except my butcher!!!'

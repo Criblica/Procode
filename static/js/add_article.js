@@ -45,23 +45,20 @@ function type_selection(){
 }
 
 function show_hide(id, selected){
-	var option_menu = document.getElementById(id);
 	if (selected){
-		option_menu.style.display = "block";
+		document.getElementById(id).style.display = "block";
 	}else{
-		option_menu.style.display = "none";
+		document.getElementById(id).style.display = "none";
 	}
 }
 
 function add(){
-	console.log("add");	
 	var type_input = document.getElementById("select_type");
     var type = type_input.options[type_input.selectedIndex].value;
     
     var title = document.getElementById("title").value;
-    console.log(type);
+    
     if (type == "code"){
-    	console.log("add_code method");
 		add_code(title);
 	}else if (type == "question"){
 		add_question(title);
@@ -71,14 +68,18 @@ function add(){
 	
 }
 
-function add_code(title){	
+function add_code(title){
 	var language_input = document.getElementById("select_language");
     var language = language_input.options[language_input.selectedIndex].value;
-    console.log(language);
+    
+    var prewords = document.getElementById("prewords").value;
+    var afterwords = document.getElementById("afterwords").value;
     
     var form_data = {
     	title: title,
     	code: editor.getValue(),
+    	prewords: prewords,
+    	afterwords: afterwords,
     	language: language
     }  
     

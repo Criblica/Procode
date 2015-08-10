@@ -57,105 +57,111 @@
 
 {% endblock %}
 
-{% block tutorial_content %}
+{% block article_content %}
 	<div>
 		<h2>Add Article</h2>
 		<div class="add_form">
-			<form action="" method="POST">
+			<form  method="POST">
 				<table>
 					<tr>
-						<td>Title:</td>
-						<td><input type=text id="title" name=title autofocus></td>
-						<td>Select type:</td>
-						<td><select id="select_type">
+						<td>
+							<input type=text id="title" name=title placeholder="Title"autofocus>
+						
+						Select type:<select id="select_type">
 						  <option value="code" selected="selected">Code</option>
 						  <option value="question">Question</option>
 						  <option value="findout">Findout</option>
 						</select></td>
 					</tr>
+					<tbody id="code">
+						<tr>
+							<td colspan="2"><textarea id="prewords" placeholder="Prewords"></textarea></td>
+						</tr>
+						<tr>
+							<td>
+								Programming language:
+								<select id="select_language" onchange="selectLanguage();">
+									<option selected="selected" value="python">Python</option>
+									<option value="go">Go</option>
+									<option value="cpp">C/C++</option>
+									<option value="csharp">C#</option>
+									<option value="java">Java</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<textarea id="editor" name=code>print "Enter code here :)"</textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Select a theme: <select onchange="selectTheme();" id=select_theme>
+								   <!-- <option >default</option>-->
+								    <option>3024-day</option>
+								    <option>3024-night</option>
+								    <option>ambiance</option>
+								    <option>base16-dark</option>
+								    <option>base16-light</option>
+								    <option>blackboard</option>
+								    <option>cobalt</option>
+								    <option>colorforth</option>
+								    <option>dracula</option>
+								    <option selected>eclipse</option>
+								    <option>elegant</option>
+								    <option>erlang-dark</option>
+								    <option>icecoder</option>
+								    <option>lesser-dark</option>
+								    <option>liquibyte</option>
+								    <option>material</option>
+								    <option>mbo</option>
+								    <option>mdn-like</option>
+								    <option>midnight</option>
+								    <option>monokai</option>
+								    <option>neat</option>
+								    <option>neo</option>
+								    <option>night</option>
+								    <option>paraiso-dark</option>
+								    <option>paraiso-light</option>
+								    <option>pastel-on-dark</option>
+								    <option>rubyblue</option>
+								    <option>seti</option>
+								    <option>solarized dark</option>
+								    <option>solarized light</option>
+								    <option>the-matrix</option>
+								    <option>tomorrow-night-bright</option>
+								    <option>tomorrow-night-eighties</option>
+								    <option>ttcn</option>
+								    <option>twilight</option>
+								    <option>vibrant-ink</option>
+								    <option>xq-dark</option>
+								    <option>xq-light</option>
+								    <option>yeti</option>
+								    <option>zenburn</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea id="afterwords" placeholder="Afterwords"></textarea></td>
+						</tr>
+					</tbody>
+					<tbody id="question">
+						<tr>
+							<td>Question:</td>
+						</tr>
+						<tr>
+							<td><textarea id="question_text" rows="4" cols="100"></textarea></td>
+						</tr>
+					</tbody>
+					<tbody id="findout">
+						<tr>
+							<td><textarea id="findout_text" rows="4" cols="100"></textarea></td>
+						</tr>
+					</tbody>
+					<tr>
+						<td align="right"><input type="button" class="greenBtn" value="Post" onclick="add();"></td>
+					</tr>
 				</table>
-				
-				<table id="code">
-					<tr>
-						
-						<td>
-							Programming language:
-							<select id="select_language" onchange="selectLanguage();">
-								<option selected="selected" value="python">Python</option>
-								<option value="go">Go</option>
-								<option value="c">C</option>
-								<option value="java">Java</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<textarea id="editor" name=code>print "Enter code here :)"</textarea>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Select a theme: <select onchange="selectTheme();" id=select_theme>
-							   <!-- <option >default</option>-->
-							    <option>3024-day</option>
-							    <option>3024-night</option>
-							    <option>ambiance</option>
-							    <option>base16-dark</option>
-							    <option>base16-light</option>
-							    <option>blackboard</option>
-							    <option>cobalt</option>
-							    <option>colorforth</option>
-							    <option>dracula</option>
-							    <option selected>eclipse</option>
-							    <option>elegant</option>
-							    <option>erlang-dark</option>
-							    <option>icecoder</option>
-							    <option>lesser-dark</option>
-							    <option>liquibyte</option>
-							    <option>material</option>
-							    <option>mbo</option>
-							    <option>mdn-like</option>
-							    <option>midnight</option>
-							    <option>monokai</option>
-							    <option>neat</option>
-							    <option>neo</option>
-							    <option>night</option>
-							    <option>paraiso-dark</option>
-							    <option>paraiso-light</option>
-							    <option>pastel-on-dark</option>
-							    <option>rubyblue</option>
-							    <option>seti</option>
-							    <option>solarized dark</option>
-							    <option>solarized light</option>
-							    <option>the-matrix</option>
-							    <option>tomorrow-night-bright</option>
-							    <option>tomorrow-night-eighties</option>
-							    <option>ttcn</option>
-							    <option>twilight</option>
-							    <option>vibrant-ink</option>
-							    <option>xq-dark</option>
-							    <option>xq-light</option>
-							    <option>yeti</option>
-							    <option>zenburn</option>
-							</select>
-						</td>
-					</tr>
-				</table>
-				<table id="question">
-					<tr>
-						<td>Question:</td>
-					</tr>
-					<tr>
-						<td><textarea id="question_text" rows="4" cols="100"></textarea></td>
-					</tr>
-				</table>
-				<table id="findout">
-					<tr>
-						<td><textarea id="findout_text" rows="4" cols="100"></textarea></td>
-					</tr>
-				</table>
-				<input type="button" class="greenBtn" value="Post" onclick="add();">
-				
 			</form>
 		</div>
 	</div>

@@ -57,7 +57,7 @@
 	    				{% else %}
 		    				{% for code_snippet in code_snippets|sort(attribute='date', reverse=True) %}
 		    					{% if loop.index <= 5 %}
-		    						<li><a href="{{ url_for('view_code_snippet', snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
+		    						<li><a href="{{ url_for('view_code_snippet', code_snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
 		    					{% endif %}
 		    				{% endfor %}
 	    				{% endif %}
@@ -71,7 +71,7 @@
 	    				{% else %}
 		    				{% for question in questions|sort(attribute='date',reverse=True) %}
 		    					{% if loop.index <= 5 %}
-		    						<li><a href="#">{{ question.title }}</a></li>
+		    						<li><a href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
 		    					{% endif %}
 		    				{% endfor %}
 		    			{% endif %}
@@ -85,7 +85,7 @@
 	    				{% else %}
 	    					{% for findout in findouts|sort(attribute='date', reverse=True) %}
 	    						{% if loop.index <= 5 %}
-		    						<li><a href="#">{{ findout.title }}</a></li>
+		    						<li><a href="{{ url_for('view_findout', findout_id=findout.id) }}">{{ findout.title }}</a></li>
 		    					{% endif %}
 		    				{% endfor %}
 		    			{% endif %}

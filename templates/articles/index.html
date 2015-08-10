@@ -1,17 +1,28 @@
 {% extends "articles.html" %}
 
-{% block tutorial_content %}
-	<div class="languages">
-		<h2>Articles</h2>
-		<h3>Programming languages</h3>
+{% block article_content %}
+	<h2>Articles</h2>
+	<h3>Programming languages</h3>
+	
+	<div>
 		
-		<center>
-			<hr>
-			<div>
-				<li><a href="{{ url_for('python') }}"><img src="/static/img/python.png"></a></li>
-				<li><a href="{{ url_for('java') }}"><img src="/static/img/java.png"></a></li>
-				<li><a href="{{ url_for('c') }}"><img src="/static/img/c.png"></a></li>
-			</div>
-		</center>
+		<ul>
+			<h4>Code snippets</h4>
+			{% for code_snippet in code_snippets %}
+				<li><a href="{{ url_for('view_code_snippet', code_snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
+			{% endfor %}
+		</ul>
+		<ul>
+			<h4>Questions</h4>
+			{% for question in questions %}
+				<li><a href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
+			{% endfor %}
+		</ul>
+		<ul>
+			<h4>Findouts</h4>
+			{% for findout in findouts %}
+				<li><a href="{{ url_for('view_findout', findout_id=findout.id) }}">{{ findout.title }}</a></li>
+			{% endfor %}
+		</ul>
 	</div>
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends "articles.html" %}
+
+{% block article_content %}
+	{% if article.type == 'code_snippet' %}
+		<h2>Code snippet</h2>
+		<h3>{{ article.title }}</h3>
+		<div class="article">
+			<p>{{ article.prewords }}</p>
+			<pre class="brush: {{ article.language }}">{{ article.code }}</pre>
+			<p>{{ article.afterwords }}</p>
+		</div>
+	{% elif article.type == 'question' %}
+		<h2>Question</h2>
+		<h3>{{ article.title }}</h3>
+		<div class="article">
+			<p>{{ article.question }}</p>
+		</div>
+	{% elif article.type == 'findout' %}
+		<h2>Findout</h2>
+		<h3>{{ article.title }}</h3>
+		<div class="article">
+			<p>{{ article.question }}</p>
+		</div>
+	{% endif %}
+	
+	<div class="article">
+		<label class="author-date">Posted {{ article.date }} by {{ article.author }}</label>
+	</div>	
+	<div class="comments">
+		<label class="comment-count">{{ comments.count() }} comments</label>
+		
+		{% for comment in comments %}
+			<div class="comment">
+				<p class="comment-message">{{ comment.message }}</p>
+				<label class="author-date">Posted {{ comment.date }} by {{ comment.author }}</label>
+			</div>
+		{% endfor %}
+		<textarea id="post_comment_text" class="write-comment" placeholder="Leave a comment..."></textarea>
+		<label id="error_msg"></label><button id="post_comment_btn" class="greenBtn float-right" onclick="post_comment({{ article.id }}, '{{ article.type }}');">Comment</button>
+	</div>
+	
+	<script type="text/javascript">
+	     SyntaxHighlighter.all()
+	</script>
+	
+{% endblock %}
