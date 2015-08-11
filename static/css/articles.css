@@ -12,15 +12,17 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	overflow: hidden;
+	background-color: white;
 }
 
 
 p{
 	width: 100%;
 	overflow: auto;
+	padding-top: 5px;
+	padding-left: 10px;
 }
 
-	
 .comments{
 	margin: 0 auto;
 	margin-top: 40px;
@@ -33,7 +35,7 @@ p{
 	margin-bottom: 5px;
 	overflow: hidden;
 	padding-right: 10px;
-	padding-left: 10px;
+	/*padding-left: 10px;*/
 }
 
 .comment-message{

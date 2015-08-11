@@ -1,3 +1,14 @@
+function view_comments(){
+	var comments = $("#comments");
+	if (comments.css('display') == "none"){
+		comments.slideDown();
+		$("#view_comments").html("Hide");
+	}else{
+		comments.slideUp();
+		$("#view_comments").html("Show");
+	}
+}
+
 function post_comment(article_id, article_type){
 	var error_field = $("#error_msg");
 	var comment_field = document.getElementById("post_comment_text");

@@ -14,7 +14,7 @@
     
     <script type="text/javascript" src="static/js/validation.js"></script>
     <link rel="stylesheet" href="static/css/profile.css" type="text/css" />
-    
+
     {% block sub_post_head %}
     {% endblock %}
 
@@ -43,10 +43,8 @@
     	<h2>{{ session['username'] }}</h2>
     	<div>
     		<div class="profile_image">
-    			{% if not session.has_image %}
-    				<img  src="{{ url_for('static', filename="img/no-profile.gif") }}" width=200 height=200>
-    			{% endif %}
-    			<button class="blueBtn">Edit profile image</button>
+    			<img src="{{ session['image_src'] }}" width=200 height=200>
+    			<a href="{{ url_for('upload_profile_image') }}" class="blueBtn">Edit profile image</a>
     		</div>
     		<div class="top-5">
     			<div class="top-5-content-position">
@@ -93,6 +91,9 @@
     			</div>
     		</div>
     	</div>
+    	
+    	{% block upload_window %}
+		{% endblock %}
     	
     	<!--<p>image, username, change password, add/edit email/show, inbox.., ..news..??
     	</p>-->

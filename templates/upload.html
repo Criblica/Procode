@@ -1,0 +1,41 @@
+{% extends "home.html" %}
+
+{% block sub_post_head %}
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}" type="text/css" />
+{% endblock %}
+
+{% block upload_window %}
+	<div id="upload_window" caption="Upload profile image">
+		<div>
+			<form id="upload_form" enctype="multipart/form-data" action="/save_image" method="post" onsubmit="return validate();">
+				<label id="upload_error" class="error"></label>
+				
+					<div class="image">
+						<img id="chosen_image" src="{{ session.image_src }}">
+					</div>
+					
+					<div class="thumbnails">	
+						<table>
+							<tr>
+								<td><img class="thumbnail" src="{{ url_for('static', filename='img/profile_images/no-profile.gif') }}" onclick="switch_image(this.src);"></td>
+								<td><img class="thumbnail" src="{{ url_for('static', filename='img/profile_images/suit.jpg') }}" onclick="switch_image(this.src);"></td>
+							</tr>
+							<tr>
+								<td><img class="thumbnail" src="{{ url_for('static', filename='img/profile_images/superuser.jpg') }}" onclick="switch_image(this.src);"></td>
+								<td><img class="thumbnail" src="{{ url_for('static', filename='img/profile_images/unknown.jpg') }}" onclick="switch_image(this.src);"></td>
+							</tr>
+						</table>
+					</div>
+					
+					<div id="hidden_area">
+						<input id="upfile" type="file" name="file" value="upload"/>
+					</div>
+					<div class="buttons">
+						<input type="button" id="chooseBtn" class="blueBtn" value="Choose image" onclick="choose_image();">
+						<input type="submit" id="useBtn" class="greenBtn" value="Use image">
+					</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
