@@ -16,3 +16,7 @@ textarea{
 	margin-bottom: 10px;
 	width: 100%;
 }
+
+#error_field{
+	color: red;
+}

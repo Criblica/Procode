@@ -2,7 +2,21 @@
 
 {% block article_content %}
 	<h2>Articles</h2>	
-	<div>
+	<div class="tabs">
+		<ul class="tab-links">	        
+	        <li class="active"><a href="{{ url_for('all_code_snippets') }}">Code Snippets</a></li>
+	        <li><a href="{{ url_for('all_questions') }}">Questions</a></li>
+	        <li><a href="{{ url_for('all_findouts') }}">Findouts</a></li>
+	    </ul>
+	</div>
+	
+	<div class="tab-content">
+		{% block tab_content %}
+		{% endblock %}
+	</div>
+	
+	
+	<div>	
 		<ul>
 			<h4>Code snippets</h4>
 			{% for code_snippet in code_snippets %}

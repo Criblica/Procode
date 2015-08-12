@@ -65,7 +65,7 @@
 				<table>
 					<tr>
 						<td>
-							<input type=text id="title" name=title placeholder="Title"autofocus>
+							<input type=text id="title" name=title placeholder="Title" autofocus>
 						
 						Select type:<select id="select_type">
 						  <option value="code" selected="selected">Code</option>
@@ -147,18 +147,16 @@
 					</tbody>
 					<tbody id="question">
 						<tr>
-							<td>Question:</td>
-						</tr>
-						<tr>
-							<td><textarea id="question_text" rows="4" cols="100"></textarea></td>
+							<td><textarea id="question_text" placeholder="Question goes here ;)" rows="4" cols="100"></textarea></td>
 						</tr>
 					</tbody>
 					<tbody id="findout">
 						<tr>
-							<td><textarea id="findout_text" rows="4" cols="100"></textarea></td>
+							<td><textarea id="findout_text" placeholder="Share your findout here!" rows="4" cols="100"></textarea></td>
 						</tr>
 					</tbody>
 					<tr>
+						<td align="left"><label id="error_field"></label></td>
 						<td align="right"><input type="button" class="greenBtn" value="Post" onclick="add();"></td>
 					</tr>
 				</table>

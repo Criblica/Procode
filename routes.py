@@ -140,7 +140,6 @@ def home():
         if session['logged_in']: 
             code_snippets = CodeSnippet.query.filter_by(author=session['username'])
             questions = Question.query.filter_by(author=session['username'])
-            print session['image_src']
             findouts = Findout.query.filter_by(author=session['username'])   
             return render_template('home.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
     return render_template('home.html')
@@ -222,12 +221,14 @@ def save_image():
         path = os.path.join(app.config['PROFILE_IMAGES'], filename)
         image.save(path)
         
-        user = User.query.filter_by(id=session['id'])
-        user.image_src = path
+        
+        db.session.query().filter_by(id=session['id']).update({"image_src": path})
         
         
+        #user = User.query.filter_by(id=session['id'])
+        #user.image_src = path
         db.session.commit()
-        session['image_src'] = user.image_src
+        session['image_src'] = path#user.image_src
         
     return redirect(url_for('home'))
 
@@ -235,12 +236,12 @@ def save_image():
 @login_required
 def use_image():
     image_src = request.json['image_src']
-    session['image_src'] = image_src
+    
     user = User.query.filter_by(id=session['id'])
     user.image_src = image_src
     
-    print user.image_src
     db.session.commit()
+    session['image_src'] = user.image_src
     return json.dumps({'message': "OK", 'iserror': False})
 
 def allowed_file(filename):

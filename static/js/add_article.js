@@ -57,6 +57,13 @@ function add(){
     var type = type_input.options[type_input.selectedIndex].value;
     
     var title = document.getElementById("title").value;
+    /*if (title == ""){
+    	console.log("uo");
+    	var error_field = document.getElementById("error_field");
+    	error_field.value = "You must add a title";
+    	return;
+    }*/
+    
     
     if (type == "code"){
 		add_code(title);
