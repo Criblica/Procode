@@ -31,13 +31,13 @@ class User(db.Model):
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     admin = db.Column(db.Boolean, nullable=False, default=False) 
     
-    def __init__(self, username, password, email, confirmed, admin, image_src):
+    def __init__(self, username, password, email, confirmed, admin):
         self.username = username
         self.password = password
         self.email = email
         self.confirmed = confirmed
         self.admin = admin
-        self.image_src = image_src
+        self.image_src = app.config['PROFILE_IMAGES']+"/no-profile.gif"
         
         
 class CodeSnippet(db.Model):
@@ -130,6 +130,16 @@ def login_required(f):
        
     return login_redirect
     
+"""
+def admin_required(f):
+    @wraps(f)
+    def admin_redirect(*args, **kwargs):
+        if 'role' in session:
+            if session['role'] == 'admin':
+                return f(*args, **kwargs)
+        return redirect(url_for('home'))
+    return admin_redirect
+"""    
 
 """
     Routes for main menu
@@ -149,7 +159,22 @@ def articles():
     code_snippets = CodeSnippet.query.all()
     questions = Question.query.all()
     findouts = Findout.query.all()
-    return render_template('articles/index.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
+    return render_template('articles/code_snippets.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
+  
+@app.route('/articles/code_snippets')
+def all_code_snippets():
+    code_snippets = CodeSnippet.query.all()
+    return render_template('articles/code_snippets.html', code_snippets=code_snippets)
+
+@app.route('/articles/questions')
+def all_questions():
+    questions = Question.query.all()
+    return render_template('articles/questions.html', questions=questions)
+
+@app.route('/articles/findouts')
+def all_findouts():
+    findouts = Findout.query.all()
+    return render_template('articles/findouts.html', findouts=findouts)
   
 @app.route('/about')
 def about():
@@ -197,7 +222,7 @@ def validate_registration():
         message = "This username is taken. Please try another one!"
         return json.dumps({'message': message, 'iserror': True})
     
-    new_user = User(request.form['username'], request.form['password'], request.form['email'], False, False, app.config['PROFILE_IMAGES']+"/no-profile.gif")
+    new_user = User(request.form['username'], request.form['password'], request.form['email'], False, False)
     db.session.add(new_user)
     db.session.commit()
 
@@ -221,25 +246,17 @@ def save_image():
         path = os.path.join(app.config['PROFILE_IMAGES'], filename)
         image.save(path)
         
-        
-        db.session.query().filter_by(id=session['id']).update({"image_src": path})
-        
-        
-        #user = User.query.filter_by(id=session['id'])
-        #user.image_src = path
+        user = User.query.filter_by(id=session['id']).first()
+        user.image_src = path
         db.session.commit()
-        session['image_src'] = path#user.image_src
-        
+        session['image_src'] = path
     return redirect(url_for('home'))
 
 @app.route('/use_image', methods=['GET', 'POST'])
 @login_required
 def use_image():
-    image_src = request.json['image_src']
-    
-    user = User.query.filter_by(id=session['id'])
-    user.image_src = image_src
-    
+    user = User.query.filter_by(id=session['id']).first()
+    user.image_src = request.json['image_src']
     db.session.commit()
     session['image_src'] = user.image_src
     return json.dumps({'message': "OK", 'iserror': False})

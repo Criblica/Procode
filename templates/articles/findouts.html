@@ -1,0 +1,15 @@
+{% extends "articles/index.html" %}
+
+{% block sub_sub_post_head %}
+	<script language="javascript" src="{{ url_for('static', filename='js/article_tabs.js') }}"></script>
+{% endblock %}
+
+{% block tab_content %}
+	<div class="tab">
+		<ul>
+			{% for findout in findouts %}
+				<li><a href="{{ url_for('view_findout', findout_id=findout.id) }}">{{ findout.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

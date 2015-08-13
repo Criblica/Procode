@@ -1,12 +1,17 @@
 {% extends "articles.html" %}
 
+{% block sub_post_head %}
+	{% block sub_sub_post_head %}
+	{% endblock %}
+{% endblock %}
+
 {% block article_content %}
 	<h2>Articles</h2>	
 	<div class="tabs">
 		<ul class="tab-links">	        
-	        <li class="active"><a href="{{ url_for('all_code_snippets') }}">Code Snippets</a></li>
-	        <li><a href="{{ url_for('all_questions') }}">Questions</a></li>
-	        <li><a href="{{ url_for('all_findouts') }}">Findouts</a></li>
+	        <li id="code_snippets" ><a href="{{ url_for('all_code_snippets') }}">Code Snippets</a></li>
+	        <li id="questions" ><a href="{{ url_for('all_questions') }}">Questions</a></li>
+	        <li id="findouts" ><a href="{{ url_for('all_findouts') }}">Findouts</a></li>
 	    </ul>
 	</div>
 	
@@ -15,7 +20,7 @@
 		{% endblock %}
 	</div>
 	
-	
+	<!--
 	<div>	
 		<ul>
 			<h4>Code snippets</h4>
@@ -35,5 +40,5 @@
 				<li><a href="{{ url_for('view_findout', findout_id=findout.id) }}">{{ findout.title }}</a></li>
 			{% endfor %}
 		</ul>
-	</div>
+	</div>-->
 {% endblock %}

@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
 {% block post_head %}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/article_tabs.css') }}"/>
+	
 	<script language="javascript" src="{{ url_for('static', filename='js/articles.js') }}"></script>
+
+	{% block sub_post_head %}
+	{% endblock %}
 
 	<!-- Syntax highlighter -->
 	<script language="javascript" src="{{ url_for('static', filename='js/scripts/shCore.js') }}"></script>
@@ -12,7 +17,8 @@
 	<link href="{{ url_for('static', filename='css/styles/shCore.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ url_for('static', filename='css/styles/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
 
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/articles.css') }}"
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/articles.css') }}"/>
+	
 	
 {% endblock %}
 

@@ -1,0 +1,15 @@
+{% extends "articles/index.html" %}
+
+{% block sub_sub_post_head %}
+	<script language="javascript" src="{{ url_for('static', filename='js/article_tabs.js') }}"></script>
+{% endblock %}
+
+{% block tab_content %}
+	<div class="tab">
+		<ul>
+			{% for code_snippet in code_snippets %}
+				<li><a href="{{ url_for('view_code_snippet', code_snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
