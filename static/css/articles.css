@@ -1,7 +1,7 @@
 .syntaxhighlighter{
 	padding-top: 10px !important;
 	padding-bottom: 10px !important;
-	width: 100% !important;
+	width: 650px !important;
 	overflow: auto !important;
 	margin: 0 auto !important;
 }
@@ -9,18 +9,37 @@
 .article{
 	margin: 0 auto;
 	width: 75%;
-	margin-top: 5px;
-	margin-bottom: 5px;
 	overflow: hidden;
 	background-color: white;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 }
 
+.article-image{
+	margin-top: 10px;
+	margin-left: 10px;
+	border: 1px solid #bbb;
+}
+
+.article-bottom{
+	margin: 0 auto;
+	width: 75%;
+	overflow: hidden;
+	background-color: white;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
 
 p{
-	width: 100%;
+	width:650px;
 	overflow: auto;
 	padding-top: 5px;
 	padding-left: 10px;
+}
+
+.title{
+	font-weight: bold;
+	
 }
 
 .comments{
@@ -32,19 +51,29 @@ p{
 .comment{
 	background: white;
 	color: grey;
-	margin-bottom: 5px;
 	overflow: hidden;
-	padding-right: 10px;
-	/*padding-left: 10px;*/
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 }
 
-.comment-message{
-	float: left;
+.comment-bottom{
+	overflow: hidden;
+	background-color: white;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	margin-bottom: 5px;
+}
+
+.comment-image{
+	margin-left: 10px;
+	margin-top: 10px;
+	border: 1px solid #bbb;
 }
 
 .comment-count{
 	padding-top: 6px;
-	background-color: grey;
+	background-color: #2b2b2b;
+	opacity: .8;
 	color: white;
 	font-size: 18px;
 	text-align: center;
@@ -66,10 +95,37 @@ p{
 .author-date{
 	font-size: 12px;
 	float: right;
-	margin-right: 5px;
+	vertical-align: bottom;
+	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+.float-left{
+	float: left;
 }
 
 .float-right{
 	float: right;
+}
+
+.width{
+	width: 700px;
+}
+
+.ans{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-right: 30px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.answered{
+	color: green;
+}
+
+.not-answered{
+	color: red;
 }

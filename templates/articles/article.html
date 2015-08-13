@@ -3,38 +3,81 @@
 {% block article_content %}
 	{% if article.type == 'code snippet' %}
 		<h2>Code snippet</h2>
-		<h3>{{ article.title }}</h3>
-		<div class="article">
-			<p>{{ article.prewords }}</p>
-			<pre class="brush: {{ article.language }}">{{ article.code }}</pre>
-			<p>{{ article.afterwords }}</p>
-		<!--</div>-->
 	{% elif article.type == 'question' %}
 		<h2>Question</h2>
-		<h3>{{ article.title }}</h3>
-		<div class="article">
-			<p>{{ article.question }}</p>
-		<!--</div>-->
 	{% elif article.type == 'findout' %}
 		<h2>Findout</h2>
-		<h3>{{ article.title }}</h3>
-		<div class="article">
-			<p>{{ article.findout }}</p>
-		<!--</div>-->
 	{% endif %}
+
 	
-	<!--<div class="article"> -->
+	{% if article.type == 'code snippet' %}
+		<div class="article">
+			<div>
+				<div class="float-left article-image">
+					<img src="{{ article.image_src }}" width="100" height="100">
+				</div>
+				<div class="float-right">
+					<p class="title">{{ article.title }}</p>
+					<p>{{ article.prewords }}</p>
+					<pre class="brush: {{ article.language }}">{{ article.code }}</pre>
+					<p>{{ article.afterwords }}</p>
+				</div>
+			</div>
+		</div>
+	{% elif article.type == 'question' %}
+		<div class="article">
+			<div>
+				<div class="float-left article-image">
+					<img src="{{ article.image_src }}" width="100" height="100">
+				</div>
+				<div class="float-left">
+					<p class="title">{{ article.title }}</p>
+					<p>{{ article.question }}</p>
+				</div>
+			</div>
+			
+		</div>
+	{% elif article.type == 'findout' %}
+		<div class="article">
+			<div class="float-left article-image">
+				<img src="{{ article.image_src }}" width="100" height="100">
+			</div>
+			<div class="float-left">
+				<p class="title">{{ article.title }}</p>
+				<p>{{ article.findout }}</p>
+			</div>
+		</div>
+	{% endif %}
+		
+	<div class="article-bottom">
 		<label class="author-date">Posted {{ article.date }} by {{ article.author }}</label>
+		 {% if article.type == "question" and article.author == session['username'] %}
+		 	{% if article.answered==True %}
+		 		<a class="float-right ans not-answered" href="{{ url_for('not_answered', question_id=article.id) }}">Mark as not answered</a>
+		 	{% else %}
+		 		<a class="float-right ans answered" href="{{ url_for('answered', question_id=article.id) }}">Mark as answered</a>
+		 	{% endif %}
+		 {% endif %}
 	</div>
+	
 	<div class="comments">
 		<label class="comment-count"><button id="view_comments" onclick="view_comments();">Hide</button> {{ comments.count() }} comments</label>
 		
 		<div id="comments">
 			{% for comment in comments %}
 				<div class="comment">
-					<p class="comment-message">{{ comment.message }}</p>
+					<div class="float-left comment-image">
+						<img src="{{ comment.image_src }}" width="75" height="75">
+					</div>
+					<div class="float-left">
+						<p class="width">{{ comment.message }}</p>
+					</div>
+				</div>
+				
+				<div class="comment-bottom">
 					<label class="author-date">Posted {{ comment.date }} by {{ comment.author }}</label>
 				</div>
+				
 			{% endfor %}
 		</div>	
 		

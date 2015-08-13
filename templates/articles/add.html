@@ -2,6 +2,7 @@
 
 {% block post_head %}
 	<script src="{{ url_for('static', filename='js/add_article.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/autogrow.js') }}"></script>
 	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 	
 	<script src="{{ url_for('static', filename='codemirror-5.5/lib/codemirror.js') }}"></script>
@@ -83,15 +84,14 @@
 								<select id="select_language" onchange="selectLanguage();">
 									<option selected="selected" value="python">Python</option>
 									<option value="go">Go</option>
-									<option value="cpp">C/C++</option>
-									<option value="csharp">C#</option>
+									<option value= "text/x-csrc">C/C#/C++</option>
 									<option value="java">Java</option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<textarea id="editor" name=code>print "Enter code here :)"</textarea>
+								<textarea id="editor" name="code">print "Enter code here :)"</textarea>
 							</td>
 						</tr>
 						<tr>
@@ -156,7 +156,7 @@
 						</tr>
 					</tbody>
 					<tr>
-						<td align="left"><label id="error_field"></label></td>
+						<!--<td align="left"><label id="error_field"></label></td>-->
 						<td align="right"><input type="button" class="greenBtn" value="Post" onclick="add();"></td>
 					</tr>
 				</table>

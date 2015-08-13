@@ -19,26 +19,4 @@
 		{% block tab_content %}
 		{% endblock %}
 	</div>
-	
-	<!--
-	<div>	
-		<ul>
-			<h4>Code snippets</h4>
-			{% for code_snippet in code_snippets %}
-				<li><a href="{{ url_for('view_code_snippet', code_snippet_id=code_snippet.id) }}">{{ code_snippet.title }}</a></li>
-			{% endfor %}
-		</ul>
-		<ul>
-			<h4>Questions</h4>
-			{% for question in questions %}
-				<li><a href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
-			{% endfor %}
-		</ul>
-		<ul>
-			<h4>Findouts</h4>
-			{% for findout in findouts %}
-				<li><a href="{{ url_for('view_findout', findout_id=findout.id) }}">{{ findout.title }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>-->
 {% endblock %}

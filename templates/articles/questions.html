@@ -2,13 +2,19 @@
 
 {% block sub_sub_post_head %}
 	<script language="javascript" src="{{ url_for('static', filename='js/article_tabs.js') }}"></script>
+
+	
 {% endblock %}
 
 {% block tab_content %}
 	<div class="tab">
-		<ul>
+		<ul class="question_list">
 			{% for question in questions %}
-				<li><a href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
+				{% if question.answered == True %}
+					<li><a style="color:green;" href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
+				{% else %}
+					<li><a style="color:red;" href="{{ url_for('view_question', question_id=question.id) }}">{{ question.title }}</a></li>
+				{% endif %}
 			{% endfor %}
 		</ul>
 	</div>

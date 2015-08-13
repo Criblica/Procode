@@ -23,6 +23,14 @@ function initialize(){
 
     editor = CodeMirror.fromTextArea(document.getElementById("editor"), config);
 	editor.setSize(500, 100);
+	editor.refresh();
+	
+	set_autogrow();
+}
+
+function set_autogrow(){
+	$("#prewords").autogrow();
+	$("#afterwords").autogrow();
 }
 
 function selectLanguage(){

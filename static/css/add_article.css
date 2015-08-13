@@ -20,3 +20,9 @@ textarea{
 #error_field{
 	color: red;
 }
+
+.CodeMirror-scroll {
+  height: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
