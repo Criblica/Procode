@@ -1,0 +1,164 @@
+{% extends "articles.html" %}
+
+{% block post_head %}
+	<script src="{{ url_for('static', filename='js/edit_article.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/autogrow.js') }}"></script>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	
+	<script src="{{ url_for('static', filename='codemirror-5.5/lib/codemirror.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='codemirror-5.5/lib/codemirror.css') }}">
+	<script src="{{ url_for('static', filename='codemirror-5.5/mode/python/python.js') }}"></script>
+	<script src="{{ url_for('static', filename='codemirror-5.5/mode/clike/clike.js') }}"></script>
+	<script src="{{ url_for('static', filename='codemirror-5.5/mode/go/go.js') }}"></script>
+	
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/3024-day.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/3024-night.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/ambiance.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/base16-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/base16-light.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/blackboard.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/cobalt.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/colorforth.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/dracula.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/eclipse.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/elegant.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/erlang-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/icecoder.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/lesser-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/liquibyte.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/material.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/mbo.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/mdn-like.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/midnight.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/monokai.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/neat.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/neo.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/night.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/paraiso-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/paraiso-light.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/pastel-on-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/rubyblue.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/seti.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/solarized.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/the-matrix.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/tomorrow-night-bright.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/tomorrow-night-eighties.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/ttcn.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/twilight.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/vibrant-ink.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/xq-dark.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/xq-light.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/yeti.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='codemirror-5.5/theme/zenburn.css')}}">
+
+	<script src="{{ url_for('static', filename='codemirror-5.5/addon/selection/active-line.js') }}"></script>
+	<script src="{{ url_for('static', filename='codemirror-5.5/addon/edit/matchbrackets.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/edit_article.css') }}"> 
+	
+
+{% endblock %}
+
+{% block article_content %}
+	<div>
+		<h2>Edit Article</h2>
+		<div class="edit">
+			<form  method="POST">
+				<table>
+					<tr>
+						<td colspan="2" align="center">
+							<input type=text id="title" class="title" name=title placeholder="Title" value="{{ article.title }}" autofocus>
+						</td>
+					</tr>
+					{% if article.type == "code snippet" %}
+						<tbody id="code">
+							<tr>
+								<td colspan="2"><textarea id="prewords" class="whitespace" placeholder="Prewords">{{ article.prewords }}</textarea></td>
+							</tr>
+							<tr>
+								<td>
+									Programming language:
+									<select id="select_language" name="{{ article.language }}" onchange="selectLanguage();">
+										<option value="python">Python</option>
+										<option value="go">Go</option>
+										<option value= "text/x-csrc">C/C#/C++</option>
+										<option value="java">Java</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<textarea id="editor" name="code">{{ article.code }}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align="right">
+									Select a theme: <select onchange="selectTheme();" id=select_theme>
+									    <option>3024-day</option>
+									    <option>3024-night</option>
+									    <option>ambiance</option>
+									    <option>base16-dark</option>
+									    <option>base16-light</option>
+									    <option>blackboard</option>
+									    <option>cobalt</option>
+									    <option>colorforth</option>
+									    <option>dracula</option>
+									    <option selected>eclipse</option>
+									    <option>elegant</option>
+									    <option>erlang-dark</option>
+									    <option>icecoder</option>
+									    <option>lesser-dark</option>
+									    <option>liquibyte</option>
+									    <option>material</option>
+									    <option>mbo</option>
+									    <option>mdn-like</option>
+									    <option>midnight</option>
+									    <option>monokai</option>
+									    <option>neat</option>
+									    <option>neo</option>
+									    <option>night</option>
+									    <option>paraiso-dark</option>
+									    <option>paraiso-light</option>
+									    <option>pastel-on-dark</option>
+									    <option>rubyblue</option>
+									    <option>seti</option>
+									    <option>solarized dark</option>
+									    <option>solarized light</option>
+									    <option>the-matrix</option>
+									    <option>tomorrow-night-bright</option>
+									    <option>tomorrow-night-eighties</option>
+									    <option>ttcn</option>
+									    <option>twilight</option>
+									    <option>vibrant-ink</option>
+									    <option>xq-dark</option>
+									    <option>xq-light</option>
+									    <option>yeti</option>
+									    <option>zenburn</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><textarea id="afterwords" class="whitespace" placeholder="Afterwords">{{ article.afterwords }}</textarea></td>
+							</tr>
+						</tbody>
+					{% elif article.type == "question" %}
+					<tbody id="question">
+						<tr>
+							<td><textarea id="question_text" placeholder="Question goes here ;)" rows="4" cols="100">{{ article.question }}</textarea></td>
+						</tr>
+					</tbody>
+					{% elif article.type == "findout" %}
+					<tbody id="findout">
+						<tr>
+							<td><textarea id="findout_text" placeholder="Share your findout here!" rows="4" cols="100">{{ article.findout }}</textarea></td>
+						</tr>
+					</tbody>
+					{% endif %}
+					<tr>
+						<td><label id="error_field"></label></td>
+						<td align="right"><input type="button" class="greenBtn" value="Save" onclick="edit( {{ article.id }}, '{{ article.type }}' );"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}

@@ -1,23 +1,23 @@
-from flask import Flask, render_template, session, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+#from flask import Flask, render_template, session, request, redirect, url_for
+#from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from werkzeug import secure_filename
 import datetime
-import time
+#import time
 #from datetime import timedelta, datetime
 import json
 import os
 
-   
+
+
+
+"""   
 app = Flask(__name__)
 
 app.config['PROFILE_IMAGES'] = './static/img/profile_images'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
-"""
-    Database
-"""
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///development.db"
 db = SQLAlchemy(app)
 
@@ -27,7 +27,7 @@ class User(db.Model):
     username = db.Column(db.String(16), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False, unique=False)
     email = db.Column(db.String(60), nullable=False, unique=True)   
-    image_src = db.Column(db.String, unique=False, default=app.config['PROFILE_IMAGES']+"/no-profile.gif")
+    image_src = db.Column(db.String, unique=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     admin = db.Column(db.Boolean, nullable=False, default=False) 
     banned = db.Column(db.Boolean, nullable=False, default=False) 
@@ -36,13 +36,13 @@ class User(db.Model):
         self.username = username
         self.password = password
         self.email = email
+        self.image_src = url_for('static', filename='img/profile_images/no-profile.gif')
         
         
 class CodeSnippet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(20), default="code snippet", nullable=False, unique=False)
     author =  db.Column(db.String(16), nullable=False, unique=False)
-    image_src = db.Column(db.String, unique=False)
     date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     language = db.Column(db.String(255), nullable=False, unique=False)
     title = db.Column(db.String(255), nullable=False, unique=False)
@@ -50,9 +50,8 @@ class CodeSnippet(db.Model):
     prewords = db.Column(db.Text, unique=False)
     afterwords = db.Column(db.Text, unique=False)
     
-    def __init__(self, author, image_src, language, title, code, prewords, afterwords):
+    def __init__(self, author, language, title, code, prewords, afterwords):
         self.author = author
-        self.image_src = image_src
         self.language = language
         self.title = title
         self.code = code
@@ -65,13 +64,11 @@ class Question(db.Model):
     question = db.Column(db.Text, nullable=False, unique=False)
     type = db.Column(db.String(20), default="question", nullable=False, unique=False)
     author =  db.Column(db.String(16), nullable=False, unique=False)
-    image_src = db.Column(db.String, unique=False)
     date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     answered = db.Column(db.Boolean, default=False)
     
-    def __init__(self, author, image_src, title, question):
+    def __init__(self, author, title, question):
         self.author = author
-        self.image_src = image_src
         self.title = title
         self.question = question
 
@@ -81,12 +78,10 @@ class Findout(db.Model):
     findout = db.Column(db.Text, nullable=False, unique=False)
     type = db.Column(db.String(20), default="findout", nullable=False, unique=False)
     author =  db.Column(db.String(16), nullable=False, unique=False)
-    image_src = db.Column(db.String, unique=False)
     date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
-    def __init__(self, author, image_src, title, findout):
+    def __init__(self, author, title, findout):
         self.author = author
-        self.image_src = image_src
         self.title = title
         self.findout = findout
     
@@ -106,7 +101,7 @@ class Comment(db.Model):
         self.author = author
         self.image_src = image_src
         
-"""  
+
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False, unique=False)
@@ -118,9 +113,13 @@ class News(db.Model):
         self.message = message
         self.date = date
         
-"""
-db.create_all()
 
+db.create_all()
+"""
+
+from project import *
+from project.models import *
+from flask import render_template
 
 @app.before_request
 def make_session_permanent():
@@ -153,13 +152,16 @@ def admin_required(f):
 """
 @app.route('/')
 def home():
-    if 'logged_in' in session:
-        if session['logged_in']: 
-            code_snippets = CodeSnippet.query.filter_by(author=session['username'])
-            questions = Question.query.filter_by(author=session['username'])
-            findouts = Findout.query.filter_by(author=session['username'])   
-            return render_template('home.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
-    return render_template('home.html')
+    news = News.query.all()
+    return render_template('home.html', news=news)
+
+@login_required
+@app.route('/profile')
+def profile():
+    code_snippets = CodeSnippet.query.filter_by(author=session['username'])
+    questions = Question.query.filter_by(author=session['username'])
+    findouts = Findout.query.filter_by(author=session['username'])   
+    return render_template('profile.html', code_snippets=code_snippets, questions=questions, findouts=findouts)
 
 @app.route('/articles')
 def articles():
@@ -249,18 +251,19 @@ def upload_profile_image():
 def save_image():
     image = request.files['file']
     if image and allowed_file(image.filename):
-        _, file_extension = os.path.splitext(image.filename)
-        #filename = secure_filename(image.filename)
-        #path = os.path.join(app.config['PROFILE_IMAGES'], filename)
-        path = os.path.join(app.config['PROFILE_IMAGES'], session['username']+file_extension)
+        #_, file_extension = os.path.splitext(image.filename)
+        filename = secure_filename(image.filename)
+        path = os.path.join(app.config['PROFILE_IMAGES'], filename)
+        #path = app.config['PROFILE_IMAGES']+'/'+filename
+        #path = app.config['PROFILE_IMAGES']+'/'+session['username']+file_extension
+        #path = url_for('static', filename="img/profile_images/"+filename)
         image.save(path)
         
         user = User.query.filter_by(id=session['id']).first()
-        user.image_src = path
+        user.image_src = url_for('static', filename='img/profile_images/'+filename)
         db.session.commit()
         session['image_src'] = path
         
-        change_profile_image()
     return redirect(url_for('home'))
 
 @app.route('/use_image', methods=['GET', 'POST'])
@@ -271,29 +274,12 @@ def use_image():
     db.session.commit()
     session['image_src'] = user.image_src
     
-    change_profile_image()
-    
     return json.dumps({'message': "OK", 'iserror': False})
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-def change_profile_image():
-    code_snippets = CodeSnippet.query.filter_by(author=session['username'])
-    questions = Question.query.filter_by(author=session['username'])
-    findouts = Findout.query.filter_by(author=session['username'])
-    comments = Comment.query.filter_by(author=session['username'])
-    
-    for code_snippet in code_snippets:
-        code_snippet.image_src = session['image_src']
-    for question in questions:
-        question.image_src = session['image_src']
-    for findout in findouts:
-        findout.image_src = session['image_src']
-    for comment in comments:
-        comment.image_src = session['image_src']
-    db.session.commit()
 
 """
     Routes for articles
@@ -313,7 +299,7 @@ def create_code_snippet():
     afterwords = request.json['afterwords']
     language = request.json['language']
     
-    code_snippet = CodeSnippet(session['username'], session['image_src'], language, title, code, prewords, afterwords)
+    code_snippet = CodeSnippet(session['username'], language, title, code, prewords, afterwords)
     db.session.add(code_snippet)
     db.session.commit()
     return json.dumps(dict(message="OK", iserror=False))
@@ -324,7 +310,7 @@ def create_question():
     title = request.json['title']
     question_message = request.json['question']
     
-    question = Question(session['username'], session['image_src'], title, question_message)
+    question = Question(session['username'], title, question_message)
     db.session.add(question)
     db.session.commit()
     return json.dumps(dict(message="OK", iserror=False))
@@ -335,30 +321,117 @@ def create_findout():
     title = request.json['title']
     findout_message = request.json['findout']
     
-    findout = Findout(session['username'], session['image_src'], title, findout_message)
+    findout = Findout(session['username'], title, findout_message)
     db.session.add(findout)
     db.session.commit()
+    return json.dumps(dict(message="OK", iserror=False))
+
+@app.route('/articles/code_snippet/delete=<code_snippet_id>')
+def delete_code_snippet(code_snippet_id):
+    code_snippet = CodeSnippet.query.filter_by(id=code_snippet_id).first()
+    delete_comments(code_snippet.id)
+    db.session.delete(code_snippet)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+@app.route('/articles/question/delete=<question_id>')
+def delete_question(question_id):
+    question = Question.query.filter_by(id=question_id).first()
+    delete_comments(question.id)
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+@app.route('/articles/findout/delete=<findout_id>')
+def delete_findout(findout_id):
+    findout = Findout.query.filter_by(id=findout_id).first()
+    delete_comments(findout.id)
+    db.session.delete(findout)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+def delete_comments(article_id):
+    comments = Comment.query.filter_by(article_id=article_id)
+    for comment in comments:
+        db.session.delete(comment)
+    db.session.commit()
+@app.route('/articles/code_snippet/edit/<code_snippet_id>')
+def fetch_code_snippet_for_edit(code_snippet_id):
+    code_snippet = CodeSnippet.query.filter_by(id=code_snippet_id).first()
+    return render_template('articles/edit.html', article=code_snippet)
+
+@app.route('/articles/question/edit/<question_id>')
+def fetch_question_for_edit(question_id):
+    question = Question.query.filter_by(id=question_id).first()
+    return render_template('articles/edit.html', article=question)
+
+@app.route('/articles/findout/edit/<findout_id>')
+def fetch_findout_for_edit(findout_id):
+    findout = Findout.query.filter_by(id=findout_id).first()
+    return render_template('articles/edit.html', article=findout)
+
+@app.route('/articles/code_snippet/save_changes', methods=['GET', 'POST'])
+def code_snippet_save_changes():
+    code_snippet = CodeSnippet.query.filter_by(id=request.json['id']).first()
+    code_snippet.title =  request.json['title']
+    code_snippet.prewords = request.json['prewords']
+    code_snippet.code = request.json['code']
+    code_snippet.afterwords = request.json['afterwords']
+    code_snippet.language = request.json['language']
+    db.session.commit()
+    
+    return json.dumps(dict(message="OK", iserror=False))
+
+@app.route('/articles/question/save_changes', methods=['GET', 'POST'])
+def question_save_changes():
+    question = Question.query.filter_by(id=request.json['id']).first()
+    question.title =  request.json['title']
+    question.question = request.json['question']
+    db.session.commit()
+    
+    return json.dumps(dict(message="OK", iserror=False))
+
+@app.route('/articles/findout/save_changes', methods=['GET', 'POST'])
+def findout_save_changes():
+    findout = Findout.query.filter_by(id=request.json['id']).first()
+    findout.title =  request.json['title']
+    findout.findout = request.json['findout']
+    db.session.commit()
+    
     return json.dumps(dict(message="OK", iserror=False))
 
 @app.route('/articles/code_snippet/<code_snippet_id>')
 def view_code_snippet(code_snippet_id):
     code_snippet = CodeSnippet.query.filter_by(id=code_snippet_id).first()
     comments = Comment.query.filter_by(article_id=code_snippet_id, article_type=code_snippet.type)
-    return render_template('/articles/article.html', article=code_snippet, comments=comments)
+    profile_images = get_profile_images(code_snippet.author, comments)
+    return render_template('/articles/article.html', article=code_snippet, comments=comments, profile_images=profile_images)
 
 @app.route('/articles/question/<question_id>')
 def view_question(question_id):
     question = Question.query.filter_by(id=question_id).first()
-    comments = Comment.query.filter_by(article_id=question_id, article_type=question.type)    
-    return render_template('/articles/article.html', article=question, comments=comments)
+    comments = Comment.query.filter_by(article_id=question_id, article_type=question.type)
+    profile_images = get_profile_images(question.author, comments)
+    return render_template('/articles/article.html', article=question, comments=comments, profile_images=profile_images)
 
 @app.route('/articles/findout/<findout_id>')
 def view_findout(findout_id):
     findout = Findout.query.filter_by(id=findout_id).first()
     comments = Comment.query.filter_by(article_id=findout_id, article_type=findout.type)
-    return render_template('/articles/article.html', article=findout, comments=comments)
+    profile_images = get_profile_images(findout.author, comments)
+    return render_template('/articles/article.html', article=findout, comments=comments, profile_images=profile_images)
 
-
+def get_profile_images(article_author, comments):
+    profile_images = {}
+    article_author_user = User.query.filter_by(username=article_author).first()
+    profile_images[article_author] = article_author_user.image_src
+    
+    for comment in comments:
+        comment_author_user = User.query.filter_by(username=comment.author).first()
+        profile_images[comment.author] = comment_author_user.image_src
+    return profile_images
+    
+    
 @app.route('/articles/post_comment', methods=['GET', 'POST'])
 @login_required
 def post_comment():
@@ -390,6 +463,6 @@ def not_answered(question_id):
 
 if __name__ == '__main__':
     app.secret_key = 'This is my supersecret key that nobody knows about, except my butcher!!!'
-    #app.run(debug=True)
-    app.run(host="192.168.10.168", port=5000, debug=True)
+    app.run(debug=True)
+    #app.run(host="192.168.10.168", port=5000, debug=True)
     

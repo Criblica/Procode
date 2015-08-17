@@ -14,8 +14,14 @@
 		<div class="article">
 			<div>
 				<div class="float-left article-image">
-					<img src="{{ article.image_src }}" width="100" height="100">
+					<img src="{{ profile_images[article.author] }}" width="100" height="100">
 				</div>
+				{% if session['username'] == article.author %}
+				<div class="float-right icon_placement">
+					<a href="{{ url_for('fetch_code_snippet_for_edit', code_snippet_id=article.id) }}"><img src="{{ url_for('static', filename='img/edit.png') }}" width="20" height="20"></a>
+					<a href="{{ url_for('delete_code_snippet', code_snippet_id=article.id) }}"><img src="{{ url_for('static', filename='img/delete.png') }}" width="20" height="20"></a>
+				</div>
+				{% endif %}
 				<div class="float-right">
 					<p class="title">{{ article.title }}</p>
 					<p>{{ article.prewords }}</p>
@@ -28,8 +34,14 @@
 		<div class="article">
 			<div>
 				<div class="float-left article-image">
-					<img src="{{ article.image_src }}" width="100" height="100">
+					<img src="{{ profile_images[article.author] }}" width="100" height="100">
 				</div>
+				{% if session['username'] == article.author %}
+				<div class="float-right icon_placement">
+					<a href="{{ url_for('fetch_question_for_edit', question_id=article.id) }}"><img src="{{ url_for('static', filename='img/edit.png') }}" width="20" height="20"></a>
+					<a href="{{ url_for('delete_question', question_id=article.id) }}"><img src="{{ url_for('static', filename='img/delete.png') }}" width="20" height="20"></a>
+				</div>
+				{% endif %}
 				<div class="float-left">
 					<p class="title">{{ article.title }}</p>
 					<p>{{ article.question }}</p>
@@ -40,8 +52,14 @@
 	{% elif article.type == 'findout' %}
 		<div class="article">
 			<div class="float-left article-image">
-				<img src="{{ article.image_src }}" width="100" height="100">
+				<img src="{{ profile_images[article.author] }}" width="100" height="100">
 			</div>
+			{% if session['username'] == article.author %}
+			<div class="float-right icon_placement">
+				<a href="{{ url_for('fetch_findout_for_edit', findout_id=article.id) }}"><img src="{{ url_for('static', filename='img/edit.png') }}" width="20" height="20"></a>
+				<a href="{{ url_for('delete_findout', findout_id=article.id) }}"><img src="{{ url_for('static', filename='img/delete.png') }}" width="20" height="20"></a>
+			</div>
+			{% endif %}
 			<div class="float-left">
 				<p class="title">{{ article.title }}</p>
 				<p>{{ article.findout }}</p>
@@ -67,10 +85,10 @@
 			{% for comment in comments %}
 				<div class="comment">
 					<div class="float-left comment-image">
-						<img src="{{ comment.image_src }}" width="75" height="75">
+						<img src="{{ profile_images[comment.author] }}" width="75" height="75">
 					</div>
 					<div class="float-left">
-						<p class="width">{{ comment.message }}</p>
+						<p class="width whitespace">{{ comment.message }}</p>
 					</div>
 				</div>
 				
