@@ -1,0 +1,41 @@
+.admin-elem{
+	margin: 0 auto;
+	width: 75%;
+	
+	padding: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+.edit-user{
+	
+}
+
+.user{
+	overflow: hidden;
+	background-color: white;
+}
+
+.user:active{
+	position: relative;
+	margin-top: 2px;
+}
+
+.user img{
+	float: left;
+	border: 1px solid #000;
+}
+
+.user label{
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.edit-article{
+
+}
+
+.banned-users{
+
+}

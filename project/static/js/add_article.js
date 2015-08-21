@@ -79,7 +79,9 @@ function add(){
 		add_question(title);
 	}else if (type == "findout"){
 		add_findout(title);
-	} 
+	}else if (type == "news"){
+		add_news(title);
+	}
 	
 }
 
@@ -106,7 +108,7 @@ function add_code(title){
     	success: function(data){
     		var errorObj = $.parseJSON(data);
 			if (!errorObj.iserror){
-				window.location = "/";
+				window.location = "/profile";
 			}else{
 				console.log(errorObj.message);
 			}
@@ -130,7 +132,7 @@ function add_question(title){
     	success: function(data){
     		var errorObj = $.parseJSON(data);
 			if (!errorObj.iserror){
-				window.location = "/";
+				window.location = "/profile";
 			}else{
 				console.log(errorObj.message);
 			}
@@ -154,10 +156,33 @@ function add_findout(title){
     	success: function(data){
     		var errorObj = $.parseJSON(data);
 			if (!errorObj.iserror){
-				window.location = "/";
+				window.location = "/profile";
 			}else{
 				console.log(errorObj.message);
 			}
     	}
     });
+}
+
+function add_news(title){
+	var news = document.getElementById("news_text").value;
+	var form_data = {
+		title: title,
+		news: news
+	}
+	
+	$.ajax({
+		type: "post",
+		url: "/articles/create_news",
+		data: JSON.stringify(form_data),
+    	contentType: 'application/json;charset=UTF-8',
+    	success: function(data){
+    		var errorObj = $.parseJSON(data);
+			if (!errorObj.iserror){
+				window.location = "/";
+			}else{
+				console.log(errorObj.message);
+			}
+    	}
+	});
 }

@@ -69,6 +69,9 @@
 							<input type=text id="title" name=title placeholder="Title" autofocus>
 						
 						Select type:<select id="select_type">
+							{% if session['admin'] %}
+								<option value="news">News</option>
+							{% endif %}
 						  <option value="code" selected="selected">Code</option>
 						  <option value="question">Question</option>
 						  <option value="findout">Findout</option>
@@ -155,6 +158,13 @@
 							<td><textarea id="findout_text" placeholder="Share your findout here!" rows="4" cols="100"></textarea></td>
 						</tr>
 					</tbody>
+					{% if session['admin'] %}
+						<tbody id="news">
+							<tr>
+								<td><textarea id="news_text" placeholder="Enter news" rows="4" cols="100"></textarea></td>
+							</tr>
+						</tbody>
+					{% endif %}
 					<tr>
 						<!--<td align="left"><label id="error_field"></label></td>-->
 						<td align="right"><input type="button" class="greenBtn" value="Post" onclick="add();"></td>

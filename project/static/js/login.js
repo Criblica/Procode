@@ -44,7 +44,7 @@ function validate_login(){
 				
 				if (valid){
 					error_field.text("");
-					window.location = "/";
+					window.location = "/profile";
 				}else{
 					error_field.text(errorObj.message);
 				}

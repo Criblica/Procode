@@ -10,6 +10,8 @@
     
     <script src="{{ url_for('static', filename='js/jquery-1.11.3.min.js') }}"></script>
     
+    
+    
     {% block post_head %}
     {% endblock %} 
     
@@ -31,21 +33,20 @@
 		        {% endif %}
 		        <li><a href="{{ url_for('articles') }}">Articles</a></li>
 		        <li><a href="{{ url_for('about') }}">About</a></li>
+		        {% if session.logged_in and session['admin'] %}
+		        	<li><a href="{{ url_for('admin_page') }}">Admin page</a></li>
+		        {% endif %}
 		      </ul>
 		      {% if session.logged_in %}
-		      	<!--<ul class="menu">
-		      		<li class="settings">
-		      			<a  href="#">Settings</a>
-		      			<ul class="submenu">
-		      				<li><a href="#">Edit profile</a></li>
-		      				<li><a href="#">Log out</a></li>
-		      			</ul>
-		      		</li>
-		      	</ul>-->
 		      	<!--<img class="settings-btn" src="{{ url_for('static', filename='img/settings.png') }}" width="25px" height="25px">-->
 		      	<a href="{{ url_for('logout') }}"><button class="blueBtn login">Log out</button></a>
 		      	<label class="identifier">Logged in as: {{ session['username'] }}</label>
-		      	
+		      {% else %}
+		      	<div>
+		      	<a href="{{ url_for('registration') }}"><button class="blueBtn login">Register</button></a>
+		      	or
+		      	<a href="{{ url_for('login') }}"><button class="greenBtn login">Log in</button></a>
+		      	</div>
 		      {% endif %}
 		    </nav></strong>
 	  </div>

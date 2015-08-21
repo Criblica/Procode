@@ -2,7 +2,10 @@
     width:75%;
     margin-left: 8%;
     display:inline-block;
-    margin-bottom: -20px;
+}
+
+.tab-links{
+	margin: 0;
 }
 
 .tab-links:after {

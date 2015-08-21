@@ -66,7 +66,7 @@ function validate(){
 				success: function(data, status) {
 					var errorObj = $.parseJSON(data);
 					if (!errorObj.iserror){
-						window.location = "/";
+						window.location = "/profile";
 					}else{
 						console.log(errorObj.message);
 					}

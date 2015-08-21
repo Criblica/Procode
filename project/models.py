@@ -4,7 +4,7 @@ Created on 17. aug. 2015
 @author: Criblica
 '''
 
-from project import *
+from project import app, db, url_for
 import time
 
 class User(db.Model):
@@ -21,7 +21,7 @@ class User(db.Model):
         self.username = username
         self.password = password
         self.email = email
-        self.image_src = url_for('static', filename='img/profile_images/no-profile.gif')
+        self.image_src = "http://127.0.0.1:5000/static/img/profile_images/no-profile.gif" #/url_for('static', filename='img/profile_images/no-profile.gif')
         
         
 class CodeSnippet(db.Model):
@@ -93,10 +93,8 @@ class News(db.Model):
     message = db.Column(db.Text, nullable=False, unique=False)
     date = db.Column(db.String(20), default=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), unique=False)
     
-    def __init__(self, title, message, date):
+    def __init__(self, title, message):
         self.title = title
         self.message = message
-        self.date = date
         
-
 db.create_all()

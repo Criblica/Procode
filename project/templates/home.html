@@ -37,19 +37,20 @@
 		
 		{% block registration_window %}
 		{% endblock %}
+		
+		<h3>News</h3>
+	{% else %}
+		<h2>News</h2>
     {% endif %}
     
-    <h2>News</h2>
-    
     <div class="news-container">
-    	<ul>
-    		{% for new in news %}
-    			<li>
-    				<p>{{ new.title }}</p>
-    				<p>{{ new.message }}</p>
-    			</li>
-    		{% endfor %}
-    	</ul>
+		{% for new in news %}
+    		<div class="news">
+				<p class="title">{{ new.title }}</p>
+				<p>{{ new.message }}</p>
+				<label class="date">Posted: {{ new.date }}</label>
+    		</div>
+		{% endfor %}
     </div>
     
   </div>

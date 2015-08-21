@@ -1,5 +1,32 @@
 .news-container{
-	border: 1px solid #000;
 	width: 75%;
 	margin: 0 auto;
+}
+
+.news{
+	background-color: white;
+	width: 100%;
+	border-radius: 5px;
+
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+
+.news p{
+	margin-left: 20px;
+}
+
+.title{
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.date{
+	font-size: 12px;
+	float: right;
+	vertical-align: bottom;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
 }

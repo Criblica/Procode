@@ -1,12 +1,30 @@
 {% extends "layout.html" %}
 
 {% block post_head %}
-	<link rel="stylesheet" href="static/css/profile.css" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}" type="text/css" />
+	
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jqxwidgets/jqxcore.j') }}s"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jqxwidgets/jqxwindow.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jqxwidgets/jqxbuttons.js') }}"></script>
+	
+	
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/jqxwidgets/jqx.base.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jqxwidgets/jqx.shinyblack.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jqxwidgets/jqx.black.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jqxwidgets/jqx.ui-darkness.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jqxwidgets/jqx.ui-le-frog.css') }}" type="text/css" />
+    
+    {% block sub_post_head %}
+    {% endblock %}
 {% endblock %}
 
 {% block content %}
  	<div class="jumbo">
-  		<h2>{{ session['username'] }}</h2>
+  		<h2>{{ session['username'] }}
+	  		{% if session['admin'] %}
+	  			- Administrator
+	  		{% endif %}
+  		</h2>
     	<div>
     		<div class="profile_image">
     			<img src="{{ session['image_src'] }}" width=200 height=200>
