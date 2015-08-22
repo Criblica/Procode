@@ -2,16 +2,6 @@
 
 
 {% block post_head %}
-    <script type="text/javascript" src="static/js/jqxwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="static/js/jqxwidgets/jqxwindow.js"></script>
-    <script type="text/javascript" src="static/js/jqxwidgets/jqxbuttons.js"></script>
-	
-	<link rel="stylesheet" href="static/css/jqxwidgets/jqx.base.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.shinyblack.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.black.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-darkness.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqxwidgets/jqx.ui-le-frog.css" type="text/css" />
-    
     <script type="text/javascript" src="static/js/validation.js"></script>
     <link rel="stylesheet" href="static/css/news.css" type="text/css" />
 
@@ -22,27 +12,8 @@
 
 {% block content %}
   <div class="jumbo">
-    {% if not session.logged_in %}	
-    	<h2>Welcome to ProCode<h2>
-    	<h3>To add articles or tutorials, please</h3>    
-	    <center>
-	    <a href="{{ url_for('login') }}"> <button id="loginBtn" class="greenBtn bigBtn">Log in</button></a>
-	    or
-	    <a href="{{ url_for('registration') }}"> <button id="registerBtn" class="blueBtn bigBtn">Register</button></a>
-    	</center>
-    	
-    	
-		{% block login_window %}
-		{% endblock %}
-		
-		{% block registration_window %}
-		{% endblock %}
-		
-		<h3>News</h3>
-	{% else %}
-		<h2>News</h2>
-    {% endif %}
-    
+	<h2>Welcome to ProCode<h2>	
+	<h3>News</h3>
     <div class="news-container">
 		{% for new in news %}
     		<div class="news">
@@ -52,6 +23,12 @@
     		</div>
 		{% endfor %}
     </div>
+    
+    {% block login_window %}
+	{% endblock %}
+	
+	{% block registration_window %}
+	{% endblock %}
     
   </div>
 {% endblock %}

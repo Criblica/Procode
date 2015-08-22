@@ -88,3 +88,11 @@ ul li:hover ul {
 	width: 100px;
 	text-align: center;
 }
+
+.register{
+	margin-top: 12px;
+	float: right;
+	margin-right: 10px;
+	color: #999;
+
+}

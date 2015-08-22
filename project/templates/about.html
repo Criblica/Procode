@@ -1,8 +1,19 @@
 {% extends "layout.html" %}
   
+{% block post_head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}" type="text/css" />
+{% endblock %}
+  
+  
 {% block content %}
   <div class="jumbo">
   	<h2>About</h2>
-  	<p>This is an About page for the Intro to Flask article. Don't I look good? Oh stop, you're making me blush.</p>
+  	<p>Procode is a web site developed by Einar Kristoffersen. 
+  	It's features involve the opportunities to post code snippets, questions and what we call findouts. 
+  	The goal is to help our fellow programmers in the world and hopefully, someone will have use for this site. 
+  	We ask all users to be serious when posting articles or comments. 
+  	Spam will be reported and you risk being banned from this site.
+  	
+  	Sign up and become a procoder today!</p>
   </div>
 {% endblock %}
